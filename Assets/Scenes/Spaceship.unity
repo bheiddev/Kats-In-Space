@@ -3458,9 +3458,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12912778da819174f85e0d235831a75f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  videoSettingsPanel: {fileID: 0}
-  audioSettingsPanel: {fileID: 0}
-  hotkeySettingsPanel: {fileID: 0}
+  videoSettingsPanel: {fileID: 944983770}
+  audioSettingsPanel: {fileID: 1770285664}
+  hotkeySettingsPanel: {fileID: 1325009580}
 --- !u!1 &1384160230
 GameObject:
   m_ObjectHideFlags: 0
