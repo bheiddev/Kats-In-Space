@@ -6,7 +6,7 @@ public class SettingsMenu : MonoBehaviour
 {
     //Settings Menu to toggle between audio, video, and keyboard panels
 
-    [Header("Panels and Buttons")]
+    [Header("Panels")]
     public GameObject videoSettingsPanel;
     public GameObject audioSettingsPanel;
     public GameObject hotkeySettingsPanel;
