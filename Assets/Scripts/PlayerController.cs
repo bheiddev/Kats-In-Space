@@ -8,6 +8,11 @@ public class PlayerController : MonoBehaviour
     public Transform orientation;
     public Rigidbody rb;
     public Animator animator;
+    public PlayerFootsteps playerFootsteps;
+    public float playerHeight;
+    public LayerMask whatIsGrounded;
+    public bool grounded;
+
 
     [Header("Movement Values")]
     float horizontalInput;
@@ -30,14 +35,22 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         MyInput();
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGrounded);
+        Debug.DrawRay(transform.position, Vector3.down * (playerHeight * 0.5f + 0.2f), grounded ? Color.green : Color.red);
 
         if (Mathf.Approximately(horizontalInput, 0f) && Mathf.Approximately(verticalInput, 0f))
         {
-            animator.SetBool("IsRunning", false); // If there is no movement input, mark the player as not running
+            animator.SetBool("IsRunning", false);
+            playerFootsteps.StopWalking();
         }
         else
         {
-            animator.SetBool("IsRunning", true); // If there is movement input, mark the player as running
+            animator.SetBool("IsRunning", true);
+
+            if (grounded == true)
+            {
+                playerFootsteps.StartWalking();
+            }
         }
     }
 
