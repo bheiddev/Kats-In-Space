@@ -26,6 +26,11 @@ public class AudioSettings : MonoBehaviour
         musicSlider.value = PlayerPrefs.GetFloat("Music", 100);
         sfxSlider.value = PlayerPrefs.GetFloat("SFX", 100);
 
+        Debug.Log(masterSlider.value);
+        Debug.Log(musicSlider.value);
+        Debug.Log(sfxSlider.value);
+
+
         // Apply the saved settings to the audio mixer
         SetMasterVolume(masterSlider.value);
         SetMusicVolume(musicSlider.value);
