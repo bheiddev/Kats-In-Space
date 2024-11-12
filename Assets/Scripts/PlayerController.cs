@@ -9,10 +9,9 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public Animator animator;
     public PlayerFootsteps playerFootsteps;
-    public float playerHeight;
     public LayerMask whatIsGrounded;
+    private Collider characterCollider; // Added reference to the character's collider
     public bool grounded;
-
 
     [Header("Movement Values")]
     float horizontalInput;
@@ -20,10 +19,10 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     Vector3 moveDirection;
 
-
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        characterCollider = GetComponent<Collider>(); // Initialize character collider
     }
 
     private void MyInput()
@@ -35,8 +34,13 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         MyInput();
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGrounded);
-        Debug.DrawRay(transform.position, Vector3.down * (playerHeight * 0.5f + 0.2f), grounded ? Color.green : Color.red);
+
+        // Set the ray origin to the center of the character's collider for a more accurate ground check
+        Vector3 rayOrigin = characterCollider.bounds.center;
+
+        // Raycast downward from the collider's center to check for grounding
+        grounded = Physics.Raycast(rayOrigin, Vector3.down, characterCollider.bounds.extents.y + 0.2f, whatIsGrounded);
+        Debug.DrawRay(rayOrigin, Vector3.down * (characterCollider.bounds.extents.y + 0.2f), grounded ? Color.green : Color.red);
 
         if (Mathf.Approximately(horizontalInput, 0f) && Mathf.Approximately(verticalInput, 0f))
         {
@@ -47,7 +51,7 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("IsRunning", true);
 
-            if (grounded == true)
+            if (grounded)
             {
                 playerFootsteps.StartWalking();
             }
