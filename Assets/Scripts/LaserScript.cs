@@ -49,8 +49,6 @@ public class LaserScript : MonoBehaviour
             activeLaser.transform.position = laserOrigin.position;
             activeLaser.transform.LookAt(hit.point);
 
-            Debug.Log("Target hit!");
-
             // Activate the LeverScript if the hit was successful
             if (leverScript != null)
             {
