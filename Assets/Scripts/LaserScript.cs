@@ -2,28 +2,26 @@ using UnityEngine;
 
 public class LaserScript : MonoBehaviour
 {
-    public Transform laserOrigin;  // Origin point of the laser
-    public GameObject laserPrefab;  // Laser particle system prefab
-    public float laserDistance = 10f;  // Max distance of the laser
-    public LayerMask targetLayer;  // Layer for target detection
-    public GameObject lever;  // Reference to the lever GameObject with LeverScript
+    public Transform laserOrigin; 
+    public GameObject laserPrefab;  
+    public float laserDistance = 10f; 
+    public GameObject lever;  
 
     private GameObject activeLaser;
     private LeverScript leverScript;
 
     private void Start()
     {
-        // Instantiate the laser particle system and keep it inactive initially
         activeLaser = Instantiate(laserPrefab, laserOrigin.position, laserOrigin.rotation);
         activeLaser.SetActive(false);
 
-        // Get the LeverScript component on the lever GameObject
+
         if (lever != null)
         {
             leverScript = lever.GetComponent<LeverScript>();
             if (leverScript != null)
             {
-                leverScript.enabled = false;  // Initially disable the LeverScript
+                leverScript.enabled = false; 
             }
         }
     }
@@ -41,13 +39,17 @@ public class LaserScript : MonoBehaviour
         // Draw a debug line from the laserOrigin, following the raycast direction and distance
         Debug.DrawRay(laserOrigin.position, direction * laserDistance, Color.red);
 
-        // Check for a hit within the specified distance on the target layer
-        if (Physics.Raycast(laserOrigin.position, direction, out hit, laserDistance, targetLayer))
+        // Perform a raycast without any layer mask to detect any collider
+        if (Physics.Raycast(laserOrigin.position, direction, out hit, laserDistance))
         {
             // Activate the laser and set its position and orientation to point at the hit point
             activeLaser.SetActive(true);
             activeLaser.transform.position = laserOrigin.position;
             activeLaser.transform.LookAt(hit.point);
+
+            // Calculate the distance to the hit point and set the laser length accordingly
+            float hitDistance = Vector3.Distance(laserOrigin.position, hit.point);
+            activeLaser.transform.localScale = new Vector3(1, 1, hitDistance);
 
             // Activate the LeverScript if the hit was successful
             if (leverScript != null)
@@ -57,7 +59,8 @@ public class LaserScript : MonoBehaviour
         }
         else
         {
-            // Set laser at max distance if no target is hit
+            // Set laser at max distance if no collider is hit
+            Debug.Log("laser at max distance");
             activeLaser.SetActive(true);
             activeLaser.transform.position = laserOrigin.position;
             activeLaser.transform.rotation = laserOrigin.rotation;
@@ -65,3 +68,4 @@ public class LaserScript : MonoBehaviour
         }
     }
 }
+
