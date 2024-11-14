@@ -13,8 +13,6 @@ public class LaserScript : MonoBehaviour
     private void Start()
     {
         activeLaser = Instantiate(laserPrefab, laserOrigin.position, laserOrigin.rotation);
-        activeLaser.SetActive(false);
-
 
         if (lever != null)
         {
