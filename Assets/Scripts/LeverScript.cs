@@ -2,26 +2,24 @@ using UnityEngine;
 
 public class LeverScript : MonoBehaviour
 {
-    public Animator leverAnimator;  // Animator for the lever's animation
-    public float activationDistance = 2f;  // Distance within which the player can activate the lever
-    public string playerTag = "Player";  // Tag assigned to the player
-    public string switchBoolName = "switch";  // Name of the animation bool in the Animator
+    public Animator leverAnimator;
+    public float activationDistance = 2f;
+    public string playerTag = "Player";
+    public string switchBoolName = "switch";
     public GameObject door;  // Door GameObject with the DoorController script
+    public GreenPowerCellContainer associatedContainer;  // Optional paired power cell container
 
     private GameObject player;
-    private DoorController doorController;  // Reference to the DoorController script on the door
+    private DoorController doorController;
+    private bool isActivated = false;
 
     private void Start()
     {
-        // Find the player by tag
         player = GameObject.FindGameObjectWithTag(playerTag);
 
-        // Get the DoorController component from the door GameObject
         if (door != null)
         {
             doorController = door.GetComponent<DoorController>();
-
-            // Make sure the DoorController is disabled initially
             if (doorController != null)
             {
                 doorController.enabled = false;
@@ -31,21 +29,35 @@ public class LeverScript : MonoBehaviour
 
     private void Update()
     {
-        // Check if the player is within activation distance
-        if (player != null && Vector3.Distance(player.transform.position, transform.position) <= activationDistance)
+        // Check if the player is within activation distance and the lever hasn't been activated yet
+        if (!isActivated && player != null && Vector3.Distance(player.transform.position, transform.position) <= activationDistance)
         {
-            // Check if the F key is pressed
+            // Allow activation when F is pressed
             if (Input.GetKeyDown(KeyCode.F))
             {
-                // Set the Animator bool to true to trigger the lever animation
-                leverAnimator.SetBool(switchBoolName, true);
-
-                // Enable the DoorController script
-                if (doorController != null)
+                // Activate the lever if there is no associated container, or if the container is powered
+                if (associatedContainer == null || associatedContainer.isPowered)
                 {
-                    doorController.enabled = true;
+                    ActivateLever();
+                }
+                else
+                {
+                    Debug.Log("The associated container is not powered!");
                 }
             }
         }
+    }
+
+    private void ActivateLever()
+    {
+        isActivated = true;
+        leverAnimator.SetBool(switchBoolName, true);
+
+        if (doorController != null)
+        {
+            doorController.enabled = true;
+        }
+
+        Debug.Log("Lever activated and door opened!");
     }
 }
