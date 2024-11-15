@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class LeverScript : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class LeverScript : MonoBehaviour
     public string playerTag = "Player";
     public string switchBoolName = "switch";
     public GameObject door;  // Door GameObject with the DoorController script
-    public GreenPowerCellContainer associatedContainer;  // Optional paired power cell container
+    public List<PowerCellContainer> requiredContainers;  // List of required power cell containers
 
     private GameObject player;
     private DoorController doorController;
@@ -35,17 +36,30 @@ public class LeverScript : MonoBehaviour
             // Allow activation when F is pressed
             if (Input.GetKeyDown(KeyCode.F))
             {
-                // Activate the lever if there is no associated container, or if the container is powered
-                if (associatedContainer == null || associatedContainer.isPowered)
+                // Activate the lever if all required containers are powered
+                if (AllContainersPowered())
                 {
                     ActivateLever();
                 }
                 else
                 {
-                    Debug.Log("The associated container is not powered!");
+                    Debug.Log("Not all required containers are powered!");
                 }
             }
         }
+    }
+
+    private bool AllContainersPowered()
+    {
+        // Check if every container in the list is powered
+        foreach (PowerCellContainer container in requiredContainers)
+        {
+            if (container != null && !container.isPowered)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void ActivateLever()

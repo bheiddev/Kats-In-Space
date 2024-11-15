@@ -7,11 +7,9 @@ TagManager:
   - Ground
   - LaserTarget
   - GreenPowerCell
-  - GreenPowerCellContainer
   - YellowPowerCell
-  - YellowPowerCellContainer
   - RedPowerCell
-  - RedPowerCellContainer
+  - PowerCellContainer
   layers:
   - Default
   - TransparentFX
