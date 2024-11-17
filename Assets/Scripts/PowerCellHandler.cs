@@ -5,8 +5,13 @@ public class PowerCellHandler : MonoBehaviour
     public bool hasGreenPowerCell = false;
     public bool hasRedPowerCell = false;
     public bool hasYellowPowerCell = false;
-    public float detectionRadius = 2f;   // Radius of the detection area
-    public float rayHeightOffset = 1f;   // Adjust to center the detection area on the player's Y axis
+    public float detectionRadius = 2f;
+    public float rayHeightOffset = 1f;
+
+    // References to particle system prefabs for each color
+    public GameObject greenSmokePrefab;
+    public GameObject yellowSmokePrefab;
+    public GameObject redSmokePrefab;
 
     void Update()
     {
@@ -18,37 +23,35 @@ public class PowerCellHandler : MonoBehaviour
 
     void InteractWithPowerCellOrContainer()
     {
-        // Center of the detection area
         Vector3 detectionCenter = transform.position + Vector3.up * rayHeightOffset;
-
-        // Perform an overlap sphere to detect objects in all directions
         Collider[] hitColliders = Physics.OverlapSphere(detectionCenter, detectionRadius);
 
         foreach (Collider hit in hitColliders)
         {
-            // Pick up a power cell
             if (hit.CompareTag("GreenPowerCell") && !hasGreenPowerCell)
             {
+                InstantiateAndDestroyParticle(greenSmokePrefab, hit.transform.position);
                 Destroy(hit.gameObject);
                 hasGreenPowerCell = true;
                 Debug.Log("Picked up Green Power Cell!");
-                return;  // Exit after picking up a cell
+                return;
             }
             else if (hit.CompareTag("YellowPowerCell") && !hasYellowPowerCell)
             {
+                InstantiateAndDestroyParticle(yellowSmokePrefab, hit.transform.position);
                 Destroy(hit.gameObject);
                 hasYellowPowerCell = true;
                 Debug.Log("Picked up Yellow Power Cell!");
-                return;  // Exit after picking up a cell
+                return;
             }
             else if (hit.CompareTag("RedPowerCell") && !hasRedPowerCell)
             {
+                InstantiateAndDestroyParticle(redSmokePrefab, hit.transform.position);
                 Destroy(hit.gameObject);
                 hasRedPowerCell = true;
                 Debug.Log("Picked up Red Power Cell!");
-                return;  // Exit after picking up a cell
+                return;
             }
-            // Place the power cell in a container if nearby and the player has the matching power cell
             else if (hit.CompareTag("PowerCellContainer"))
             {
                 PowerCellContainer container = hit.GetComponent<PowerCellContainer>();
@@ -81,15 +84,24 @@ public class PowerCellHandler : MonoBehaviour
                             }
                             break;
                     }
-                    return;  // Exit after placing the power cell
+                    return;
                 }
             }
         }
     }
 
+    void InstantiateAndDestroyParticle(GameObject particlePrefab, Vector3 position)
+    {
+        if (particlePrefab != null)
+        {
+            // Add a 2f offset on the Y axis
+            Vector3 offsetPosition = position + new Vector3(0, .40f, 0);
+            GameObject particleInstance = Instantiate(particlePrefab, offsetPosition, Quaternion.identity);
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
-        // Draw the detection area in the Scene view for debugging
         Gizmos.color = Color.green;
         Vector3 detectionCenter = transform.position + Vector3.up * rayHeightOffset;
         Gizmos.DrawWireSphere(detectionCenter, detectionRadius);
