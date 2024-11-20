@@ -14,7 +14,6 @@ public class NumberDisplay : MonoBehaviour
         // Show the empty background slot
         backgroundImage.gameObject.SetActive(true);
         // Hide the number until collected
-        numberImage.gameObject.SetActive(false);
         isCollected = false;
     }
 
