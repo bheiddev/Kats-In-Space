@@ -110,21 +110,66 @@ public class PlayerController : MonoBehaviour
     private IEnumerator MoveToBox(Transform boxTransform)
     {
         isJumpingToBox = true;
-        animator.SetBool("Jump", true); // Trigger jump animation
+        animator.SetBool("Jump", true);
 
-        // Target position on top of the box
+        // Calculate jump parameters
+        Vector3 startPosition = transform.position;
         Vector3 targetPosition = new Vector3(boxTransform.position.x, boxTransform.position.y + jumpHeight, boxTransform.position.z);
 
-        // Smoothly move the player to the target position
-        while (Vector3.Distance(transform.position, targetPosition) > 0.05f)
+        float jumpDuration = 0.5f; // Adjust this value to control jump speed
+        float elapsedTime = 0f;
+
+        // Calculate the initial velocity needed to reach the target
+        Vector3 distance = targetPosition - startPosition;
+        float initialVerticalVelocity = (2 * jumpHeight) / (jumpDuration / 2);
+        Vector3 horizontalVelocity = new Vector3(distance.x, 0, distance.z) / jumpDuration;
+
+        while (elapsedTime < jumpDuration)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            elapsedTime += Time.deltaTime;
+            float normalizedTime = elapsedTime / jumpDuration;
+
+            // Calculate vertical position using physics equation: h = v0*t - (1/2)gt^2
+            float verticalOffset = (initialVerticalVelocity * elapsedTime) -
+                                 (0.5f * Physics.gravity.magnitude * elapsedTime * elapsedTime);
+
+            // Smoothly interpolate horizontal movement
+            Vector3 horizontalPosition = startPosition + horizontalVelocity * elapsedTime;
+
+            // Combine vertical and horizontal movement
+            Vector3 newPosition = new Vector3(
+                horizontalPosition.x,
+                startPosition.y + verticalOffset,
+                horizontalPosition.z
+            );
+
+            // Apply the movement
+            transform.position = newPosition;
+
             yield return null;
         }
 
-        // Reset after reaching the target
+        // Ensure we land exactly on the target
+        transform.position = targetPosition;
+
+        // Reset the jump animation and flag
         animator.SetBool("Jump", false);
         isJumpingToBox = false;
+    }
+
+    private float CalculateJumpVelocity(float height, float duration)
+    {
+        return (2 * height) / duration;
+    }
+
+    private Vector3 CalculateJumpPosition(Vector3 start, Vector3 velocity, float time)
+    {
+        float verticalOffset = (velocity.y * time) - (0.5f * Physics.gravity.magnitude * time * time);
+        return new Vector3(
+            start.x + velocity.x * time,
+            start.y + verticalOffset,
+            start.z + velocity.z * time
+        );
     }
 
     private void OnDrawGizmosSelected()
