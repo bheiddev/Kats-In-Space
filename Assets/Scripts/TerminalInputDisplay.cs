@@ -38,9 +38,8 @@ public class TerminalInputDisplay : MonoBehaviour
     {
         for (int i = 0; i < inputButtons.Length; i++)
         {
-            int buttonIndex = i;
-            // Fix for button 0 (index 9) mapping to the correct number
-            inputButtons[i].onClick.AddListener(() => AddSymbol(buttonIndex == 9 ? 0 : buttonIndex + 1)); // Add +1 except for 0 which maps to 10th sprite
+            int buttonNumber = i; // Use the index directly
+            inputButtons[i].onClick.AddListener(() => AddSymbol(buttonNumber));
         }
 
         if (clearButton != null)
@@ -65,8 +64,8 @@ public class TerminalInputDisplay : MonoBehaviour
         Renderer symbolRenderer = symbolObject.GetComponent<Renderer>();
         Material symbolMaterial = new Material(Shader.Find("Unlit/Transparent"));
 
-        // Fix the logic to handle '0' correctly
-        int spriteIndex = number == 0 ? 9 : number - 1;  // For 0, use last element in numberSymbols
+        // Correct sprite indexing
+        int spriteIndex = number; // Directly use the number as index
         symbolMaterial.mainTexture = ConvertSpriteToTexture(numberSymbols[spriteIndex]);
         symbolRenderer.material = symbolMaterial;
 
