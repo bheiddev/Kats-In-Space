@@ -7,11 +7,10 @@ TagManager:
   - Ground
   - LaserTarget
   - GreenPowerCell
-  - GreenPowerCellContainer
   - YellowPowerCell
-  - YellowPowerCellContainer
   - RedPowerCell
-  - RedPowerCellContainer
+  - PowerCellContainer
+  - Terminal
   layers:
   - Default
   - TransparentFX
@@ -20,8 +19,8 @@ TagManager:
   - Water
   - UI
   - LaserTarget
-  - 
-  - 
+  - JumpBox
+  - Terminal
   - 
   - 
   - 
