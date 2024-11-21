@@ -14,6 +14,13 @@ public class CombinationManager : MonoBehaviour
     private List<int> availableNumbers;
     private int collectiblesFound = 0;
 
+    private List<int> generatedCombination = new List<int>();
+
+    public List<int> GetGeneratedCombination()
+    {
+        return generatedCombination;
+    }
+
     private void Start()
     {
         combinationPanel.SetActive(false);
@@ -37,14 +44,15 @@ public class CombinationManager : MonoBehaviour
     {
         if (collectiblesFound >= 4) return;
 
-        // Get a random available number
         int randomIndex = Random.Range(0, availableNumbers.Count);
         int selectedNumber = availableNumbers[randomIndex];
         availableNumbers.RemoveAt(randomIndex);
 
+        // Store the generated number
+        generatedCombination.Add(selectedNumber);
+
         // Set the sprite for the current NumberDisplay
         numberDisplays[collectiblesFound].SetNumber(numberSprites[selectedNumber]);
-
         collectiblesFound++;
     }
 

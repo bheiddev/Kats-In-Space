@@ -22,6 +22,11 @@ public class TerminalInputDisplay : MonoBehaviour
 
     private List<GameObject> currentSymbols = new List<GameObject>();
 
+    public List<GameObject> GetCurrentSymbols()
+    {
+        return new List<GameObject>(currentSymbols);
+    }
+
     private void Awake()
     {
         // Validate terminal screen renderer

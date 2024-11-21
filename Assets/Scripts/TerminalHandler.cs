@@ -1,6 +1,9 @@
 using UnityEngine;
 using Cinemachine;
-using UnityEngine.UI;
+using System.Collections.Generic;
+using System.Linq;
+
+
 
 public class TerminalHandler : MonoBehaviour
 {
@@ -20,6 +23,13 @@ public class TerminalHandler : MonoBehaviour
     private bool isUsingTerminal;
     private GameObject currentTerminal;
     private bool wasMouseVisible;
+
+    private List<int> enteredCombination = new List<int>();
+
+    public List<int> GetEnteredCombination()
+    {
+        return enteredCombination;
+    }
 
     private void Start()
     {
@@ -42,6 +52,14 @@ public class TerminalHandler : MonoBehaviour
             {
                 ExitTerminal();
             }
+        }
+    }
+
+    public void AddEnteredNumber(int number)
+    {
+        if (enteredCombination.Count < 4)
+        {
+            enteredCombination.Add(number);
         }
     }
 
