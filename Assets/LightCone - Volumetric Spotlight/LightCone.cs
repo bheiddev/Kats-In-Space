@@ -4,50 +4,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Light))]
+[RequireComponent( typeof(Light) )]
 public class LightCone : MonoBehaviour
 {
-    public int wedges = 36;
-    public float dist = 20;
-    public float width = 2;
-    public float height = 2;
+    public int          wedges = 36;
+    public float        dist = 20;
+    public float        width = 2;
+    public float        height = 2;
     [SerializeField]
-    private Color _color = new Color(1, 1, 1, 0.25f);
-    public LayerMask collidesWith;
-    public int gizmoWedges = 4;
+	private Color       _color = new Color(1, 1, 1, 0.25f);
+	public LayerMask    collidesWith;
+    public int          gizmoWedges = 4;
 
     [Header("Spotlight Settings")]
-    public bool spotlightEnabled = true;
-    public float spotAnglePercent = 100;
-    public float rangePercent = 100;
+    public bool         spotlightEnabled = true;
+    public float        spotAnglePercent = 100;
+    public float        rangePercent = 100;
 
 
-    MeshFilter mF;
-    Mesh mesh;
-    Vector3[] verts;
-    int[] tris;
-    Material mat;
-    RaycastHit[] hits;
+    MeshFilter          mF;
+    Mesh                mesh;
+    Vector3[]           verts;
+    int[]               tris;
+    Material            mat;
+	RaycastHit[]        hits;
+    
+    private Light       lit;
+    private float       dist0, width0, sAP0, rP0;
 
-    private Light lit;
-    private float dist0, width0, sAP0, rP0;
+	public Color color
+	{
+		get
+		{
+			return _color;
+		}
 
-    public Color color
-    {
-        get
-        {
-            return _color;
-        }
-
-        set
-        {
-            _color = value;
-            UpdateLight();
-        }
-    }
+		set
+		{
+			_color = value;
+			UpdateLight();
+		}
+	}
 
 
-    // Use this for initialization
+	// Use this for initialization
     void Start()
     {
         mF = GetComponent<MeshFilter>();
@@ -57,17 +57,17 @@ public class LightCone : MonoBehaviour
 
         MakeVerts();
 
-        tris = new int[wedges * 3];
+        tris = new int[wedges*3];
 
-        int triN = 0;
-        int vertN = 1;
+        int triN=0;
+        int vertN=1;
         for (int i = 0; i < wedges; i++)
         {
             tris[triN] = 0;
             triN++;
             if (vertN < verts.Length - 1)
             {
-                tris[triN] = vertN + 1;
+                tris[triN] = vertN+1;
             }
             else
             {
@@ -83,12 +83,12 @@ public class LightCone : MonoBehaviour
         mat = GetComponent<Renderer>().material;
 
         UpdateLight();
-    }
+	}
 
 
     void MakeVerts()
     {
-        verts = new Vector3[wedges + 1];
+        verts = new Vector3[wedges+1];
         verts[0] = Vector3.zero;
 
         Vector3 v, r;
@@ -103,14 +103,14 @@ public class LightCone : MonoBehaviour
             if (Physics.Raycast(transform.position, r, out hits[i], v.magnitude, collidesWith))
             {
                 v = v.normalized * hits[i].distance;
-            }
-            verts[i + 1] = v;
+			}
+            verts[i+1] = v;
         }
         mesh.vertices = verts;
     }
-
-
-    // Update is called once per frame
+	
+	
+	// Update is called once per frame
     void Update()
     {
         MakeVerts();
@@ -118,7 +118,7 @@ public class LightCone : MonoBehaviour
         {
             mat.color = color;
         }
-    }
+	}
 
 
     // This draws the outline when not playing (and Selected)
@@ -233,6 +233,6 @@ public class LightCone : MonoBehaviour
 
     public RaycastHit[] GetRaycastHits()
     {
-        return hits;
-    }
+		return hits;
+	}
 }

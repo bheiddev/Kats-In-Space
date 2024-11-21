@@ -11,6 +11,7 @@ TagManager:
   - RedPowerCell
   - PowerCellContainer
   - Terminal
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - LaserTarget
   - JumpBox
   - Terminal
-  - 
-  - 
+  - Player
+  - LightConeBlocker
   - 
   - 
   - 
