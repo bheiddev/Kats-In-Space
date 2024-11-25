@@ -11,6 +11,7 @@ TagManager:
   - RedPowerCell
   - PowerCellContainer
   - Terminal
+  - Cat
   layers:
   - Default
   - TransparentFX

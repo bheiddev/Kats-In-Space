@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         // Listen for the F key press and initiate the jump-to-box action
-        if (Input.GetKeyDown(KeyCode.F) && !isJumpingToBox)
+        if (Input.GetKeyDown(KeyCode.Space) && !isJumpingToBox)
         {
             JumpToBox();
         }
