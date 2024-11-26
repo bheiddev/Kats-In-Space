@@ -14,6 +14,7 @@ public class LeverScript : MonoBehaviour
     public CombinationManager combinationManager;
     public TerminalInputDisplay terminalInputDisplay;
     public GameObject finalLeverObject;  // Reference to the final lever's GameObject
+    public GameObject leverPanel;
 
     private GameObject player;
     private DoorController doorController;
@@ -39,36 +40,45 @@ public class LeverScript : MonoBehaviour
     private void Update()
     {
         // Check if the player is within activation distance and the lever hasn't been activated yet
-        if (!isActivated && player != null && Vector3.Distance(player.transform.position, transform.position) <= activationDistance)
+        float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+        if (!isActivated && player != null)
         {
-            // Allow activation when F is pressed
-            if (Input.GetKeyDown(KeyCode.F))
+            // Show the Lever Panel if player is within range
+            if (distanceToPlayer <= activationDistance)
             {
-                // For final lever, check combination match
-                if (isFinalLever)
+                leverPanel.SetActive(true); // Show the Lever Panel UI
+
+                if (Input.GetKeyDown(KeyCode.F))
                 {
-                    if (VerifyCombination())
+                    // For final lever, check combination match
+                    if (isFinalLever)
+                    {
+                        if (VerifyCombination())
+                        {
+                            ActivateLever();
+                        }
+                        else
+                        {
+                            Debug.Log("Incorrect combination entered!");
+                        }
+                    }
+                    // For other levers, check power cell containers
+                    else if (AllContainersPowered())
                     {
                         ActivateLever();
                     }
                     else
                     {
-                        Debug.Log("Incorrect combination entered!");
+                        Debug.Log("Not all required containers are powered!");
                     }
                 }
-                // For other levers, check power cell containers
-                else if (AllContainersPowered())
-                {
-                    ActivateLever();
-                }
-                else
-                {
-                    Debug.Log("Not all required containers are powered!");
-                }
+            }
+            else
+            {
+                leverPanel.SetActive(false); // Hide the Lever Panel UI if player is out of range
             }
         }
     }
-
     private bool VerifyCombination()
     {
         // Ensure we have references to both combination manager and terminal input display

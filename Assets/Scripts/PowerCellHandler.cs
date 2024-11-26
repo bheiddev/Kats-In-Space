@@ -12,13 +12,42 @@ public class PowerCellHandler : MonoBehaviour
     public GameObject greenSmokePrefab;
     public GameObject yellowSmokePrefab;
     public GameObject redSmokePrefab;
+    public GameObject grabPowerCellUI;
+    public GameObject placePowerCellUI;
 
     void Update()
     {
+        CheckForProximityToPowerCellsAndContainers();
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             InteractWithPowerCellOrContainer();
         }
+    }
+
+    private void CheckForProximityToPowerCellsAndContainers()
+    {
+        Vector3 detectionCenter = transform.position + Vector3.up * rayHeightOffset;
+        Collider[] hitColliders = Physics.OverlapSphere(detectionCenter, detectionRadius);
+
+        bool isNearPowerCell = false;
+        bool isNearContainer = false;
+
+        foreach (Collider hit in hitColliders)
+        {
+            if (hit.CompareTag("GreenPowerCell") || hit.CompareTag("YellowPowerCell") || hit.CompareTag("RedPowerCell"))
+            {
+                isNearPowerCell = true; // Player is near a power cell
+            }
+            else if (hit.CompareTag("PowerCellContainer"))
+            {
+                isNearContainer = true; // Player is near a power cell container
+            }
+        }
+
+        // Show the appropriate UI based on proximity
+        grabPowerCellUI.SetActive(isNearPowerCell); // Show grab UI when near a power cell
+        placePowerCellUI.SetActive(isNearContainer); // Show place UI when near a power cell container
     }
 
     void InteractWithPowerCellOrContainer()
