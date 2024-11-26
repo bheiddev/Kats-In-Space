@@ -1,4 +1,6 @@
 using UnityEngine;
+using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class LeverScript : MonoBehaviour
@@ -10,20 +12,24 @@ public class LeverScript : MonoBehaviour
     public GameObject door;  // Door GameObject with the DoorController script
     public List<PowerCellContainer> requiredContainers;  // List of required power cell containers
 
-    // New variables for combination verification
     public CombinationManager combinationManager;
     public TerminalInputDisplay terminalInputDisplay;
-    public GameObject finalLeverObject;  // Reference to the final lever's GameObject
-    public GameObject leverPanel;
+    public GameObject finalLeverObject;
 
     private GameObject player;
     private DoorController doorController;
-    private bool isActivated = false;
+    public bool isActivated = false;
     private bool isFinalLever = false;
+
+    [SerializeField] private GameObject incorrectCombinationUIPanel;
+    [SerializeField] private GameObject notAllContainersPoweredUIPanel;
+    [SerializeField] private GameObject catNotCollectedUIPanel;
+
+    [Header("Cat Collection")]
+    public CatHandler catHandler; // Reference to the CatHandler script
 
     private void Start()
     {
-        // Determine if this is the final lever in the level
         isFinalLever = (finalLeverObject != null && finalLeverObject == this.gameObject);
 
         player = GameObject.FindGameObjectWithTag(playerTag);
@@ -39,27 +45,39 @@ public class LeverScript : MonoBehaviour
 
     private void Update()
     {
-        // Check if the player is within activation distance and the lever hasn't been activated yet
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+
         if (!isActivated && player != null)
         {
             // Show the Lever Panel if player is within range
             if (distanceToPlayer <= activationDistance)
             {
-                leverPanel.SetActive(true); // Show the Lever Panel UI
-
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    // For final lever, check combination match
+                    // For final lever, check all conditions
                     if (isFinalLever)
                     {
-                        if (VerifyCombination())
+                        if (VerifyCombination() && AllContainersPowered() && catHandler.IsCatCollected)
                         {
                             ActivateLever();
                         }
                         else
                         {
-                            Debug.Log("Incorrect combination entered!");
+                            if (!VerifyCombination())
+                            {
+                                Debug.Log("Incorrect combination entered!");
+                                StartCoroutine(ShowErrorUI(incorrectCombinationUIPanel));
+                            }
+                            else if (!AllContainersPowered())
+                            {
+                                Debug.Log("Not all required containers are powered!");
+                                StartCoroutine(ShowErrorUI(notAllContainersPoweredUIPanel));
+                            }
+                            else if (!catHandler.IsCatCollected)
+                            {
+                                Debug.Log("Cat has not been collected!");
+                                StartCoroutine(ShowErrorUI(catNotCollectedUIPanel));
+                            }
                         }
                     }
                     // For other levers, check power cell containers
@@ -70,15 +88,20 @@ public class LeverScript : MonoBehaviour
                     else
                     {
                         Debug.Log("Not all required containers are powered!");
+                        StartCoroutine(ShowErrorUI(notAllContainersPoweredUIPanel));
                     }
                 }
             }
-            else
-            {
-                leverPanel.SetActive(false); // Hide the Lever Panel UI if player is out of range
-            }
         }
     }
+
+    private IEnumerator ShowErrorUI(GameObject errorUIPanel)
+    {
+        errorUIPanel.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        errorUIPanel.SetActive(false);
+    }
+
     private bool VerifyCombination()
     {
         // Ensure we have references to both combination manager and terminal input display
@@ -154,7 +177,6 @@ public class LeverScript : MonoBehaviour
 
     private bool AllContainersPowered()
     {
-        // Check if every container in the list is powered
         foreach (PowerCellContainer container in requiredContainers)
         {
             if (container != null && !container.isPowered)

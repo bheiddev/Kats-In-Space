@@ -12,6 +12,7 @@ TagManager:
   - PowerCellContainer
   - Terminal
   - Cat
+  - Lever
   layers:
   - Default
   - TransparentFX

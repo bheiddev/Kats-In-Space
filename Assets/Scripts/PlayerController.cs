@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,10 +10,11 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public PlayerFootsteps playerFootsteps;
     public LayerMask whatIsGrounded;
-    private Collider characterCollider; 
+    private Collider characterCollider;
     public bool grounded;
     public LayerMask jumpBoxLayer;
     public GameObject characterMesh; // Reference to the player's mesh
+    public GameObject jumpBoxUIPanel; // Reference to the UI panel for jump boxes
 
     [Header("Movement Values")]
     float horizontalInput;
@@ -29,7 +30,11 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        characterCollider = GetComponent<Collider>(); 
+        characterCollider = GetComponent<Collider>();
+        if (jumpBoxUIPanel != null)
+        {
+            jumpBoxUIPanel.SetActive(false); // Ensure the UI panel is hidden at start
+        }
     }
 
     private void MyInput()
@@ -38,20 +43,9 @@ public class PlayerController : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
     }
 
-    public void SpeedControl()
-    {
-        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        if (flatVel.magnitude > 10)
-        {
-            Vector3 limitedVel = flatVel.normalized * 10;
-            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
-        }
-    }
-
     private void Update()
     {
-        // Listen for the F key press and initiate the jump-to-box action
+        // Listen for the Space key press and initiate the jump-to-box action
         if (Input.GetKeyDown(KeyCode.Space) && !isJumpingToBox)
         {
             JumpToBox();
@@ -80,6 +74,9 @@ public class PlayerController : MonoBehaviour
                 playerFootsteps.StartWalking();
             }
         }
+
+        // Check for JumpBox interaction and show the UI
+        CheckForJumpBox();
     }
 
     private void FixedUpdate()
@@ -157,19 +154,40 @@ public class PlayerController : MonoBehaviour
         isJumpingToBox = false;
     }
 
-    private float CalculateJumpVelocity(float height, float duration)
+    private void CheckForJumpBox()
     {
-        return (2 * height) / duration;
-    }
+        // Check if the grabPowerCellUI is active; if so, do not show the jump box UI
+        PowerCellHandler powerCellHandler = FindObjectOfType<PowerCellHandler>();
+        if (powerCellHandler != null && powerCellHandler.grabPowerCellUI.activeSelf)
+        {
+            if (jumpBoxUIPanel != null)
+            {
+                jumpBoxUIPanel.SetActive(false);
+            }
+            return;
+        }
 
-    private Vector3 CalculateJumpPosition(Vector3 start, Vector3 velocity, float time)
-    {
-        float verticalOffset = (velocity.y * time) - (0.5f * Physics.gravity.magnitude * time * time);
-        return new Vector3(
-            start.x + velocity.x * time,
-            start.y + verticalOffset,
-            start.z + velocity.z * time
-        );
+        // Adjusted ray origin for better detection
+        Vector3 rayOrigin = transform.position + new Vector3(0, .25f, 0);
+
+        // Cast a ray forward to detect a jump box
+        RaycastHit hit;
+        if (Physics.Raycast(rayOrigin, characterMesh.transform.forward, out hit, rayDistance, jumpBoxLayer))
+        {
+            // Show the jump box UI panel
+            if (jumpBoxUIPanel != null)
+            {
+                jumpBoxUIPanel.SetActive(true);
+            }
+        }
+        else
+        {
+            // Hide the jump box UI panel if no jump box is detected
+            if (jumpBoxUIPanel != null)
+            {
+                jumpBoxUIPanel.SetActive(false);
+            }
+        }
     }
 
     private void OnDrawGizmosSelected()

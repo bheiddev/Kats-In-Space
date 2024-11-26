@@ -7,6 +7,7 @@ public class PowerCellHandler : MonoBehaviour
     public bool hasYellowPowerCell = false;
     public float detectionRadius = 2f;
     public float rayHeightOffset = 1f;
+    private PowerCellContainer nearestContainer = null;
 
     // References to particle system prefabs for each color
     public GameObject greenSmokePrefab;
@@ -31,7 +32,7 @@ public class PowerCellHandler : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(detectionCenter, detectionRadius);
 
         bool isNearPowerCell = false;
-        bool isNearContainer = false;
+        nearestContainer = null;
 
         foreach (Collider hit in hitColliders)
         {
@@ -41,13 +42,22 @@ public class PowerCellHandler : MonoBehaviour
             }
             else if (hit.CompareTag("PowerCellContainer"))
             {
-                isNearContainer = true; // Player is near a power cell container
+                PowerCellContainer container = hit.GetComponent<PowerCellContainer>();
+                if (container != null && !container.isPowered)
+                {
+                    if ((container.containerColor == PowerCellContainer.PowerCellColor.Green && hasGreenPowerCell) ||
+                        (container.containerColor == PowerCellContainer.PowerCellColor.Yellow && hasYellowPowerCell) ||
+                        (container.containerColor == PowerCellContainer.PowerCellColor.Red && hasRedPowerCell))
+                    {
+                        nearestContainer = container;
+                    }
+                }
             }
         }
 
         // Show the appropriate UI based on proximity
         grabPowerCellUI.SetActive(isNearPowerCell); // Show grab UI when near a power cell
-        placePowerCellUI.SetActive(isNearContainer); // Show place UI when near a power cell container
+        placePowerCellUI.SetActive(nearestContainer != null); // Show place UI when near a valid container
     }
 
     void InteractWithPowerCellOrContainer()
@@ -125,7 +135,7 @@ public class PowerCellHandler : MonoBehaviour
         {
             // Add a 2f offset on the Y axis
             Vector3 offsetPosition = position + new Vector3(0, .40f, 0);
-            GameObject particleInstance = Instantiate(particlePrefab, offsetPosition, Quaternion.identity);
+            Instantiate(particlePrefab, offsetPosition, Quaternion.identity);
         }
     }
 

@@ -1,18 +1,18 @@
 using UnityEngine;
 using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-
-
 
 public class TerminalHandler : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject uiPanel;
+    [SerializeField] private GameObject uiPanel; // Original UI for terminal interaction
+    [SerializeField] private GameObject collisionUIPanel; // New UI for collision
+    [SerializeField] private GameObject codexUIPanel; // UI for the Codex
     [SerializeField] private CinemachineFreeLook thirdPersonCamera;
     [SerializeField] private CinemachineVirtualCamera firstPersonCamera;
     [SerializeField] private Transform playerHead;
-    [SerializeField] private GameObject characterModel; // Reference to the character model
+    [SerializeField] private GameObject characterModel;
 
     [Header("Terminal Detection")]
     [SerializeField] private float raycastHeightOffset = 1f;
@@ -24,6 +24,8 @@ public class TerminalHandler : MonoBehaviour
     private GameObject currentTerminal;
     private bool wasMouseVisible;
 
+    private bool isCollidingWithTerminal = false;
+
     private List<int> enteredCombination = new List<int>();
 
     public List<int> GetEnteredCombination()
@@ -33,10 +35,16 @@ public class TerminalHandler : MonoBehaviour
 
     private void Start()
     {
-        // Ensure FP camera starts disabled
         if (firstPersonCamera != null)
         {
             firstPersonCamera.gameObject.SetActive(false);
+        }
+
+        uiPanel.SetActive(false);          // Ensure the interaction UI starts hidden
+        collisionUIPanel.SetActive(false); // Ensure the collision UI starts hidden
+        if (codexUIPanel != null)
+        {
+            codexUIPanel.SetActive(false); // Ensure the Codex UI starts hidden
         }
     }
 
@@ -65,14 +73,10 @@ public class TerminalHandler : MonoBehaviour
 
     private void TryInteractWithTerminal()
     {
-        // Calculate ray origin with vertical offset
         Vector3 rayOrigin = characterModel.transform.position + (Vector3.up * raycastHeightOffset);
-
-        // Create a ray from the character model's forward direction
         Ray ray = new Ray(rayOrigin, characterModel.transform.forward);
         RaycastHit hitInfo;
 
-        // Perform the raycast
         if (Physics.Raycast(ray, out hitInfo, interactionDistance, terminalLayer))
         {
             if (hitInfo.collider.CompareTag("Terminal"))
@@ -90,22 +94,31 @@ public class TerminalHandler : MonoBehaviour
         // Switch cameras
         thirdPersonCamera.gameObject.SetActive(false);
         firstPersonCamera.gameObject.SetActive(true);
-
-        // Position first person camera at player's head
         firstPersonCamera.transform.position = playerHead.position;
 
-        // Show UI and unlock cursor
+        // Show the original UI
         uiPanel.SetActive(true);
+
+        // Lock cursor for terminal interaction
         wasMouseVisible = Cursor.visible;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
+        // Disable collision UI while interacting
+        collisionUIPanel.SetActive(false);
+
+        // Display Codex UI for 2 seconds
+        if (codexUIPanel != null)
+        {
+            StartCoroutine(ShowCodexUI());
+        }
     }
 
     private void ExitTerminal()
     {
         isUsingTerminal = false;
 
-        // Hide UI and restore cursor state
+        // Hide the original UI and restore cursor state
         uiPanel.SetActive(false);
         Cursor.visible = wasMouseVisible;
         Cursor.lockState = CursorLockMode.Locked;
@@ -115,16 +128,48 @@ public class TerminalHandler : MonoBehaviour
         thirdPersonCamera.gameObject.SetActive(true);
 
         currentTerminal = null;
+
+        // Re-enable collision UI if still colliding
+        if (isCollidingWithTerminal)
+        {
+            collisionUIPanel.SetActive(true);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Terminal"))
+        {
+            isCollidingWithTerminal = true;
+
+            // Show the collision-based UI
+            collisionUIPanel.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Terminal"))
+        {
+            isCollidingWithTerminal = false;
+
+            // Hide the collision-based UI
+            collisionUIPanel.SetActive(false);
+        }
+    }
+
+    private IEnumerator ShowCodexUI()
+    {
+        codexUIPanel.SetActive(true); // Activate Codex UI
+        yield return new WaitForSeconds(2f); // Wait for 2 seconds
+        codexUIPanel.SetActive(false); // Deactivate Codex UI
     }
 
     private void OnDrawGizmosSelected()
     {
-        // Visual debugging of interaction ray
         if (characterModel != null)
         {
-            // Calculate ray origin with vertical offset
             Vector3 rayOrigin = characterModel.transform.position + (Vector3.up * raycastHeightOffset);
-
             Gizmos.color = Color.yellow;
             Gizmos.DrawRay(rayOrigin, characterModel.transform.forward * interactionDistance);
         }
