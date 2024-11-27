@@ -20,4 +20,13 @@ public class DoorController : MonoBehaviour
         // Set the "character_nearby" parameter in the Animator
         doorAnimator.SetBool("character_nearby", isPlayerNearby);
     }
+
+    // New method to activate the door explicitly
+    public void ForceActivateDoor()
+    {
+        if (doorAnimator != null)
+        {
+            doorAnimator.SetBool("character_nearby", true); // Activate door
+        }
+    }
 }
