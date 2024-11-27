@@ -1,7 +1,6 @@
 using UnityEngine;
 using Cinemachine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class RedButton : MonoBehaviour
 {
@@ -11,8 +10,13 @@ public class RedButton : MonoBehaviour
     [SerializeField] private Animator buttonAnimator; // Animator on the button
     [SerializeField] private string buttonAnimationBool = "Switch"; // Animation bool name
     [SerializeField] private DoorController[] doors; // Array of door controllers to activate
+    [SerializeField] private CinemachineFreeLook freeLookCamera; // Reference to the Cinemachine FreeLook camera
 
     private bool isPlayerNear = false; // Tracks if the player is within range
+    private bool isButtonActive = true; // Tracks if the button can be interacted with
+
+    private float originalNoiseAmplitude;
+    private float originalNoiseFrequency;
 
     void Start()
     {
@@ -20,15 +24,29 @@ public class RedButton : MonoBehaviour
         {
             uiPrompt.SetActive(false); // Ensure UI prompt starts hidden
         }
+
+        if (freeLookCamera != null)
+        {
+            // Store the original noise values for restoration
+            CinemachineBasicMultiChannelPerlin topRigNoise = freeLookCamera.GetRig(0).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            if (topRigNoise != null)
+            {
+                originalNoiseAmplitude = topRigNoise.m_AmplitudeGain;
+                originalNoiseFrequency = topRigNoise.m_FrequencyGain;
+            }
+        }
     }
 
     void Update()
     {
-        DetectPlayer();
-
-        if (isPlayerNear && Input.GetKeyDown(KeyCode.F))
+        if (isButtonActive)
         {
-            PressButton();
+            DetectPlayer();
+
+            if (isPlayerNear && Input.GetKeyDown(KeyCode.F))
+            {
+                PressButton();
+            }
         }
     }
 
@@ -59,6 +77,8 @@ public class RedButton : MonoBehaviour
 
     void PressButton()
     {
+        if (!isButtonActive) return; // Prevent pressing an inactive button
+
         // Activate the button's animation
         if (buttonAnimator != null)
         {
@@ -74,13 +94,49 @@ public class RedButton : MonoBehaviour
             }
         }
 
-        // Hide the UI prompt after the button is pressed
+        // Add explosion camera shake
+        if (freeLookCamera != null)
+        {
+            StartCoroutine(ShakeCamera(3f, 3f, 3f));
+        }
+
+        // Hide the UI prompt and deactivate the button
         if (uiPrompt != null)
         {
             uiPrompt.SetActive(false);
         }
 
+        isButtonActive = false; // Disable the button to prevent reactivation
         Debug.Log("Red button pressed! Doors activated.");
+    }
+
+    private IEnumerator ShakeCamera(float amplitude, float frequency, float duration)
+    {
+        if (freeLookCamera == null) yield break;
+
+        // Apply noise to all rigs
+        for (int i = 0; i < 3; i++)
+        {
+            CinemachineBasicMultiChannelPerlin rigNoise = freeLookCamera.GetRig(i).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            if (rigNoise != null)
+            {
+                rigNoise.m_AmplitudeGain = amplitude;
+                rigNoise.m_FrequencyGain = frequency;
+            }
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        // Reset noise to original values
+        for (int i = 0; i < 3; i++)
+        {
+            CinemachineBasicMultiChannelPerlin rigNoise = freeLookCamera.GetRig(i).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            if (rigNoise != null)
+            {
+                rigNoise.m_AmplitudeGain = originalNoiseAmplitude;
+                rigNoise.m_FrequencyGain = originalNoiseFrequency;
+            }
+        }
     }
 
     private void OnDrawGizmosSelected()
