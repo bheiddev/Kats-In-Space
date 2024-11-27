@@ -16,6 +16,20 @@ public class PowerCellHandler : MonoBehaviour
     public GameObject grabPowerCellUI;
     public GameObject placePowerCellUI;
 
+    public enum PowerCellType
+    {
+        Green,
+        Yellow,
+        Red
+    }
+
+    [SerializeField] private GameObject greenPowerCellUI;
+    [SerializeField] private GameObject yellowPowerCellUI;
+    [SerializeField] private GameObject redPowerCellUI;
+    [SerializeField] private GameObject greyGreenPowerCellUI;
+    [SerializeField] private GameObject greyYellowPowerCellUI;
+    [SerializeField] private GameObject greyRedPowerCellUI;
+
     void Update()
     {
         CheckForProximityToPowerCellsAndContainers();
@@ -60,6 +74,25 @@ public class PowerCellHandler : MonoBehaviour
         placePowerCellUI.SetActive(nearestContainer != null); // Show place UI when near a valid container
     }
 
+    private void TogglePowerCellUI(PowerCellType cellType, bool isPickedUp)
+    {
+        switch (cellType)
+        {
+            case PowerCellType.Green:
+                greenPowerCellUI.SetActive(isPickedUp);
+                greyGreenPowerCellUI.SetActive(!isPickedUp);
+                break;
+            case PowerCellType.Yellow:
+                yellowPowerCellUI.SetActive(isPickedUp);
+                greyYellowPowerCellUI.SetActive(!isPickedUp);
+                break;
+            case PowerCellType.Red:
+                redPowerCellUI.SetActive(isPickedUp);
+                greyRedPowerCellUI.SetActive(!isPickedUp);
+                break;
+        }
+    }
+
     void InteractWithPowerCellOrContainer()
     {
         Vector3 detectionCenter = transform.position + Vector3.up * rayHeightOffset;
@@ -72,6 +105,10 @@ public class PowerCellHandler : MonoBehaviour
                 InstantiateAndDestroyParticle(greenSmokePrefab, hit.transform.position);
                 Destroy(hit.gameObject);
                 hasGreenPowerCell = true;
+
+                // Update UI
+                TogglePowerCellUI(PowerCellType.Green, true);
+
                 Debug.Log("Picked up Green Power Cell!");
                 return;
             }
@@ -80,6 +117,10 @@ public class PowerCellHandler : MonoBehaviour
                 InstantiateAndDestroyParticle(yellowSmokePrefab, hit.transform.position);
                 Destroy(hit.gameObject);
                 hasYellowPowerCell = true;
+
+                // Update UI
+                TogglePowerCellUI(PowerCellType.Yellow, true);
+
                 Debug.Log("Picked up Yellow Power Cell!");
                 return;
             }
@@ -88,6 +129,10 @@ public class PowerCellHandler : MonoBehaviour
                 InstantiateAndDestroyParticle(redSmokePrefab, hit.transform.position);
                 Destroy(hit.gameObject);
                 hasRedPowerCell = true;
+
+                // Update UI
+                TogglePowerCellUI(PowerCellType.Red, true);
+
                 Debug.Log("Picked up Red Power Cell!");
                 return;
             }
@@ -103,6 +148,10 @@ public class PowerCellHandler : MonoBehaviour
                             {
                                 container.PowerOn();
                                 hasGreenPowerCell = false;
+
+                                // Update UI
+                                TogglePowerCellUI(PowerCellType.Green, false);
+
                                 Debug.Log("Powered Green Power Cell Container!");
                             }
                             break;
@@ -111,6 +160,10 @@ public class PowerCellHandler : MonoBehaviour
                             {
                                 container.PowerOn();
                                 hasYellowPowerCell = false;
+
+                                // Update UI
+                                TogglePowerCellUI(PowerCellType.Yellow, false);
+
                                 Debug.Log("Powered Yellow Power Cell Container!");
                             }
                             break;
@@ -119,6 +172,10 @@ public class PowerCellHandler : MonoBehaviour
                             {
                                 container.PowerOn();
                                 hasRedPowerCell = false;
+
+                                // Update UI
+                                TogglePowerCellUI(PowerCellType.Red, false);
+
                                 Debug.Log("Powered Red Power Cell Container!");
                             }
                             break;

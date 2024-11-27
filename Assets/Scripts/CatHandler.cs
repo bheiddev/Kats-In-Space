@@ -7,7 +7,12 @@ public class CatHandler : MonoBehaviour
     public float rayHeightOffset = 1f;   // Adjust to center the detection area on the player's Y axis
 
     [Header("UI Settings")]
+    [SerializeField] private GameObject greyCatUI; // UI element showing a greyed-out cat
+    [SerializeField] private GameObject colorCatUI; // UI element showing a collected colored cat
     [SerializeField] private GameObject catUIPanel; // UI panel to show when near a cat
+
+    [Header("VFX Settings")]
+    [SerializeField] private GameObject smokeVFXPrefab; // Reference to the smoke particle prefab
 
     public bool IsCatCollected { get; private set; } = false; // Flag to check if the cat has been collected
 
@@ -15,10 +20,18 @@ public class CatHandler : MonoBehaviour
 
     void Start()
     {
-        // Ensure the cat UI panel is hidden at the start
+        // Initialize UI states
+        if (greyCatUI != null)
+        {
+            greyCatUI.SetActive(true); // Grey cat visible at start
+        }
+        if (colorCatUI != null)
+        {
+            colorCatUI.SetActive(false); // Color'd cat hidden at start
+        }
         if (catUIPanel != null)
         {
-            catUIPanel.SetActive(false);
+            catUIPanel.SetActive(false); // Hide interaction panel at start
         }
     }
 
@@ -40,14 +53,24 @@ public class CatHandler : MonoBehaviour
         // Perform an overlap sphere to detect objects in all directions
         Collider[] hitColliders = Physics.OverlapSphere(detectionCenter, detectionRadius);
 
+        isNearCat = false; // Reset detection flag
+
         foreach (Collider hit in hitColliders)
         {
             if (hit.CompareTag("Cat"))
             {
                 isNearCat = true;
-                catUIPanel.SetActive(true);
+                if (catUIPanel != null)
+                {
+                    catUIPanel.SetActive(true); // Show interaction UI
+                }
                 break;
             }
+        }
+
+        if (!isNearCat && catUIPanel != null)
+        {
+            catUIPanel.SetActive(false); // Hide interaction UI if no cat is nearby
         }
     }
 
@@ -63,21 +86,44 @@ public class CatHandler : MonoBehaviour
         {
             if (hit.CompareTag("Cat"))
             {
+                // Instantiate the smoke VFX at the cat's position
+                if (smokeVFXPrefab != null)
+                {
+                    GameObject smokeVFX = Instantiate(smokeVFXPrefab, hit.transform.position, Quaternion.identity);
+                    Destroy(smokeVFX, 2f); // Destroy the particle system after 2 seconds
+                }
+
                 Destroy(hit.gameObject);
                 Debug.Log("Picked up a cat friend!");
 
                 // Set the flag to indicate the cat has been collected
                 IsCatCollected = true;
 
-                // Hide the UI panel since the cat was picked up
+                // Update UI
+                UpdateCatUI();
+
+                // Hide the interaction UI panel
                 if (catUIPanel != null)
                 {
                     catUIPanel.SetActive(false);
                 }
 
-                isNearCat = false; // Update the state
-                return;  // Exit after picking up a cat
+                isNearCat = false; // Update state
+                return; // Exit after picking up a cat
             }
+        }
+    }
+
+    private void UpdateCatUI()
+    {
+        // Toggle the UI states based on whether a cat is collected
+        if (greyCatUI != null)
+        {
+            greyCatUI.SetActive(!IsCatCollected); // Grey cat becomes inactive when collected
+        }
+        if (colorCatUI != null)
+        {
+            colorCatUI.SetActive(IsCatCollected); // Color'd cat becomes active when collected
         }
     }
 
