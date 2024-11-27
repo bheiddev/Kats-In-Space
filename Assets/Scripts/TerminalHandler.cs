@@ -16,7 +16,7 @@ public class TerminalHandler : MonoBehaviour
 
     [Header("Terminal Detection")]
     [SerializeField] private float raycastHeightOffset = 1f;
-    [SerializeField] private float interactionDistance = 2f;
+    [SerializeField] private float interactionRadius = 2f;
     [SerializeField] private LayerMask terminalLayer;
 
     // State tracking
@@ -73,16 +73,19 @@ public class TerminalHandler : MonoBehaviour
 
     private void TryInteractWithTerminal()
     {
-        Vector3 rayOrigin = characterModel.transform.position + (Vector3.up * raycastHeightOffset);
-        Ray ray = new Ray(rayOrigin, characterModel.transform.forward);
-        RaycastHit hitInfo;
+        // Center of the detection sphere
+        Vector3 detectionCenter = characterModel.transform.position + (Vector3.up * raycastHeightOffset);
 
-        if (Physics.Raycast(ray, out hitInfo, interactionDistance, terminalLayer))
+        // Find all objects within the interaction radius
+        Collider[] hitColliders = Physics.OverlapSphere(detectionCenter, interactionRadius, terminalLayer);
+
+        foreach (Collider hitCollider in hitColliders)
         {
-            if (hitInfo.collider.CompareTag("Terminal"))
+            if (hitCollider.CompareTag("Terminal"))
             {
-                currentTerminal = hitInfo.collider.gameObject;
+                currentTerminal = hitCollider.gameObject;
                 EnterTerminal();
+                return;
             }
         }
     }
@@ -128,6 +131,7 @@ public class TerminalHandler : MonoBehaviour
         thirdPersonCamera.gameObject.SetActive(true);
 
         currentTerminal = null;
+        codexUIPanel.SetActive(false);
 
         // Re-enable collision UI if still colliding
         if (isCollidingWithTerminal)
@@ -155,6 +159,7 @@ public class TerminalHandler : MonoBehaviour
 
             // Hide the collision-based UI
             collisionUIPanel.SetActive(false);
+            
         }
     }
 
@@ -169,9 +174,9 @@ public class TerminalHandler : MonoBehaviour
     {
         if (characterModel != null)
         {
-            Vector3 rayOrigin = characterModel.transform.position + (Vector3.up * raycastHeightOffset);
+            Vector3 detectionCenter = characterModel.transform.position + (Vector3.up * raycastHeightOffset);
             Gizmos.color = Color.yellow;
-            Gizmos.DrawRay(rayOrigin, characterModel.transform.forward * interactionDistance);
+            Gizmos.DrawWireSphere(detectionCenter, interactionRadius);
         }
     }
 }
