@@ -3627,6 +3627,8 @@ MonoBehaviour:
   fadeImage: {fileID: 1673376138}
   loadingScreenSceneName: LoadingScreen
   fadeDuration: 1
+  gameClockTime: 1800
+  gameClockText: {fileID: 0}
 --- !u!4 &229470433
 Transform:
   m_ObjectHideFlags: 0
@@ -5117,6 +5119,14 @@ MonoBehaviour:
   door: {fileID: 1855593378}
   requiredContainers:
   - {fileID: 712600796}
+  combinationManager: {fileID: 0}
+  terminalInputDisplay: {fileID: 0}
+  finalLeverObject: {fileID: 0}
+  isActivated: 0
+  incorrectCombinationUIPanel: {fileID: 0}
+  notAllContainersPoweredUIPanel: {fileID: 0}
+  catNotCollectedUIPanel: {fileID: 0}
+  catHandler: {fileID: 0}
 --- !u!4 &291856075 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 455954, guid: 12e496df8ad3e4040a0c0b250b35d205,
@@ -6471,6 +6481,14 @@ MonoBehaviour:
   door: {fileID: 729604567}
   requiredContainers:
   - {fileID: 1707867004}
+  combinationManager: {fileID: 0}
+  terminalInputDisplay: {fileID: 0}
+  finalLeverObject: {fileID: 0}
+  isActivated: 0
+  incorrectCombinationUIPanel: {fileID: 0}
+  notAllContainersPoweredUIPanel: {fileID: 0}
+  catNotCollectedUIPanel: {fileID: 0}
+  catHandler: {fileID: 0}
 --- !u!95 &435064710 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9569330, guid: 12e496df8ad3e4040a0c0b250b35d205,
@@ -13900,6 +13918,14 @@ MonoBehaviour:
   switchBoolName: Switch
   door: {fileID: 454367291}
   requiredContainers: []
+  combinationManager: {fileID: 0}
+  terminalInputDisplay: {fileID: 0}
+  finalLeverObject: {fileID: 0}
+  isActivated: 0
+  incorrectCombinationUIPanel: {fileID: 0}
+  notAllContainersPoweredUIPanel: {fileID: 0}
+  catNotCollectedUIPanel: {fileID: 0}
+  catHandler: {fileID: 0}
 --- !u!4 &874303159 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 455954, guid: 12e496df8ad3e4040a0c0b250b35d205,
@@ -16407,6 +16433,14 @@ MonoBehaviour:
   switchBoolName: Switch
   door: {fileID: 2119585583}
   requiredContainers: []
+  combinationManager: {fileID: 0}
+  terminalInputDisplay: {fileID: 0}
+  finalLeverObject: {fileID: 0}
+  isActivated: 0
+  incorrectCombinationUIPanel: {fileID: 0}
+  notAllContainersPoweredUIPanel: {fileID: 0}
+  catNotCollectedUIPanel: {fileID: 0}
+  catHandler: {fileID: 0}
 --- !u!4 &1048106146 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 455954, guid: 12e496df8ad3e4040a0c0b250b35d205,
@@ -19919,6 +19953,14 @@ MonoBehaviour:
   switchBoolName: Switch
   door: {fileID: 1748537048}
   requiredContainers: []
+  combinationManager: {fileID: 0}
+  terminalInputDisplay: {fileID: 0}
+  finalLeverObject: {fileID: 0}
+  isActivated: 0
+  incorrectCombinationUIPanel: {fileID: 0}
+  notAllContainersPoweredUIPanel: {fileID: 0}
+  catNotCollectedUIPanel: {fileID: 0}
+  catHandler: {fileID: 0}
 --- !u!4 &1296038759 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 455954, guid: 12e496df8ad3e4040a0c0b250b35d205,
@@ -21338,7 +21380,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7d247d1011decc84a96362aedd1e516f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 78.534
+      value: 78.11
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7d247d1011decc84a96362aedd1e516f,
         type: 3}
@@ -25685,6 +25727,14 @@ MonoBehaviour:
   switchBoolName: Switch
   door: {fileID: 503509194}
   requiredContainers: []
+  combinationManager: {fileID: 0}
+  terminalInputDisplay: {fileID: 0}
+  finalLeverObject: {fileID: 0}
+  isActivated: 0
+  incorrectCombinationUIPanel: {fileID: 0}
+  notAllContainersPoweredUIPanel: {fileID: 0}
+  catNotCollectedUIPanel: {fileID: 0}
+  catHandler: {fileID: 0}
 --- !u!4 &1693123746 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 455954, guid: 12e496df8ad3e4040a0c0b250b35d205,

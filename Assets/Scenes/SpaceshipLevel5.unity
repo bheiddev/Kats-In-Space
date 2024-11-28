@@ -1262,7 +1262,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 157224, guid: 12e496df8ad3e4040a0c0b250b35d205, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Lever
       objectReference: {fileID: 0}
     - target: {fileID: 455954, guid: 12e496df8ad3e4040a0c0b250b35d205, type: 3}
       propertyPath: m_LocalScale.x
@@ -1426,8 +1426,8 @@ MonoBehaviour:
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
-  m_HorizontalDamping: 0
-  m_VerticalDamping: 0
+  m_HorizontalDamping: 2
+  m_VerticalDamping: 2
   m_ScreenX: 0.5
   m_ScreenY: 1.5
   m_DeadZoneWidth: 0
@@ -1450,7 +1450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 1.25, z: -2}
+  m_FollowOffset: {x: 0, y: 0.5, z: -1}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -2191,7 +2191,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 54704478}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.027444454, y: 0.6287956, z: 0.022216337, w: 0.77676857}
+  m_LocalRotation: {x: -0.06427748, y: 0.6270324, z: 0.052032687, w: 0.77459115}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -16651,6 +16651,7 @@ GameObject:
   - component: {fileID: 560719036}
   - component: {fileID: 560719035}
   - component: {fileID: 560719038}
+  - component: {fileID: 560719039}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -16895,6 +16896,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4987b54438b7c9842abd004be68a0876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &560719039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560719026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477747329139ea347b7e52c6055ef9fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &565504019
@@ -19414,7 +19427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 157224, guid: 12e496df8ad3e4040a0c0b250b35d205, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Lever
       objectReference: {fileID: 0}
     - target: {fileID: 455954, guid: 12e496df8ad3e4040a0c0b250b35d205, type: 3}
       propertyPath: m_LocalScale.x
@@ -28664,7 +28677,7 @@ Transform:
   m_GameObject: {fileID: 1015291733}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 96.071, y: -71.68246, z: -49.832977}
+  m_LocalPosition: {x: 97.04907, y: -72.43246, z: -49.624733}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -28730,7 +28743,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_YAxis:
-    Value: 0.5
+    Value: 0
     m_SpeedMode: 0
     m_MaxSpeed: 2
     m_AccelTime: 0.2
@@ -31932,7 +31945,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 157224, guid: 12e496df8ad3e4040a0c0b250b35d205, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Lever
       objectReference: {fileID: 0}
     - target: {fileID: 455954, guid: 12e496df8ad3e4040a0c0b250b35d205, type: 3}
       propertyPath: m_LocalScale.x
@@ -34482,8 +34495,8 @@ MonoBehaviour:
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
-  m_HorizontalDamping: 0
-  m_VerticalDamping: 0
+  m_HorizontalDamping: 2
+  m_VerticalDamping: 2
   m_ScreenX: 0.5
   m_ScreenY: 0.98
   m_DeadZoneWidth: 0
@@ -34506,7 +34519,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 1.25, z: -2}
+  m_FollowOffset: {x: 0, y: 0.5, z: -1}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -38036,7 +38049,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369492393}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08627137, y: 0.62530017, z: -0.06983683, w: 0.7724505}
+  m_LocalRotation: {x: 0.04951517, y: 0.62790954, z: -0.040082585, w: 0.7756747}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -41771,7 +41784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 157224, guid: 12e496df8ad3e4040a0c0b250b35d205, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Lever
       objectReference: {fileID: 0}
     - target: {fileID: 455954, guid: 12e496df8ad3e4040a0c0b250b35d205, type: 3}
       propertyPath: m_LocalScale.x
@@ -42272,7 +42285,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1585453605}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.15434043, y: 0.6166585, z: -0.12493887, w: 0.7617753}
+  m_LocalRotation: {x: 0.11801422, y: 0.6218927, z: -0.09553264, w: 0.76824194}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -46284,8 +46297,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1716299531}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.15434046, y: 0.61665815, z: -0.124938756, w: 0.7617756}
-  m_LocalPosition: {x: 96.071, y: -71.68246, z: -49.832977}
+  m_LocalRotation: {x: -0.06427735, y: 0.6270331, z: 0.05203269, w: 0.77459055}
+  m_LocalPosition: {x: 97.04907, y: -72.43246, z: -49.624733}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -51809,8 +51822,8 @@ MonoBehaviour:
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
-  m_HorizontalDamping: 0
-  m_VerticalDamping: 0
+  m_HorizontalDamping: 2
+  m_VerticalDamping: 2
   m_ScreenX: 0.5
   m_ScreenY: 0.72
   m_DeadZoneWidth: 0
@@ -51833,7 +51846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 1.25, z: -2}
+  m_FollowOffset: {x: 0, y: 0.5, z: -1}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -54137,7 +54150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 144508, guid: b9feb5bea08025142a9823171074408b, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Cat
       objectReference: {fileID: 0}
     - target: {fileID: 411112, guid: b9feb5bea08025142a9823171074408b, type: 3}
       propertyPath: m_LocalScale.x
@@ -55837,7 +55850,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 157224, guid: 12e496df8ad3e4040a0c0b250b35d205, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Lever
       objectReference: {fileID: 0}
     - target: {fileID: 455954, guid: 12e496df8ad3e4040a0c0b250b35d205, type: 3}
       propertyPath: m_LocalScale.x
