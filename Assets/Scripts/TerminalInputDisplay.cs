@@ -5,45 +5,75 @@ using System.Collections.Generic;
 public class TerminalInputDisplay : MonoBehaviour
 {
     [Header("Terminal Screen")]
-    [SerializeField] private Renderer terminalScreenRenderer; // Reference to the terminal screen's renderer
+    [SerializeField] private Renderer terminalScreenRenderer;
 
     [Header("Input Symbols")]
-    [SerializeField] private Sprite[] numberSymbols; // Drag and drop sprites in order 1-9
+    [SerializeField] private Sprite[] numberSymbols; // Make sure these are assigned in inspector
+    private Material symbolMaterialTemplate; // Template material to clone from
 
     [Header("Layout Settings")]
-    private const int maxInputLength = 4; // Fixed to 4
-    [SerializeField] private Vector2 symbolSize = new Vector2(0.01f, 0.01f); // Scaled down to 0.01
-    [SerializeField] private float spacingX = 0.02f; // Reduced spacing
-    [SerializeField] private Vector2 startPosition = new Vector2(-0.04f, 0.2f); // Adjusted start position
+    private const int maxInputLength = 4;
+    [SerializeField] private Vector2 symbolSize = new Vector2(0.01f, 0.01f);
+    [SerializeField] private float spacingX = 0.02f;
+    [SerializeField] private Vector2 startPosition = new Vector2(-0.04f, 0.2f);
 
     [Header("UI Buttons")]
-    [SerializeField] private Button[] inputButtons; // Drag 9 buttons in order
-    [SerializeField] private Button clearButton; // Optional clear button
+    [SerializeField] private Button[] inputButtons;
+    [SerializeField] private Button clearButton;
 
     private List<GameObject> currentSymbols = new List<GameObject>();
 
-    public List<GameObject> GetCurrentSymbols()
-    {
-        return new List<GameObject>(currentSymbols);
-    }
-
     private void Awake()
     {
-        // Validate terminal screen renderer
         if (terminalScreenRenderer == null)
         {
             Debug.LogError("Terminal screen renderer is not assigned!");
             return;
         }
 
+        // Create and cache the template material at startup
+        InitializeSymbolMaterial();
         SetupButtonListeners();
+    }
+
+    private void InitializeSymbolMaterial()
+    {
+        // Load the shader from Resources folder
+        Shader unlit = Shader.Find("Unlit/Transparent");
+        if (unlit == null)
+        {
+            // Fallback to mobile shader if standard unlit isn't found
+            unlit = Shader.Find("Mobile/Unlit (Supports Lightmap)");
+        }
+
+        if (unlit == null)
+        {
+            Debug.LogError("Could not find required shader! Please ensure Unlit/Transparent or Mobile/Unlit shader is included in build.");
+            return;
+        }
+
+        symbolMaterialTemplate = new Material(unlit);
+        symbolMaterialTemplate.name = "SymbolMaterialTemplate";
     }
 
     private void SetupButtonListeners()
     {
+        // Validate number symbols array
+        if (numberSymbols == null || numberSymbols.Length == 0)
+        {
+            Debug.LogError("Number symbols array is empty or not assigned!");
+            return;
+        }
+
         for (int i = 0; i < inputButtons.Length; i++)
         {
-            int buttonNumber = i; // Use the index directly
+            if (inputButtons[i] == null)
+            {
+                Debug.LogError($"Button at index {i} is not assigned!");
+                continue;
+            }
+
+            int buttonNumber = i;
             inputButtons[i].onClick.AddListener(() => AddSymbol(buttonNumber));
         }
 
@@ -55,73 +85,48 @@ public class TerminalInputDisplay : MonoBehaviour
 
     public void AddSymbol(int number)
     {
-        // Ensure we don't exceed max input length
-        if (currentSymbols.Count >= maxInputLength) return;
+        if (currentSymbols.Count >= maxInputLength || symbolMaterialTemplate == null) return;
 
-        // Create a new symbol as a quad
+        // Validate sprite index
+        if (number < 0 || number >= numberSymbols.Length || numberSymbols[number] == null)
+        {
+            Debug.LogError($"Invalid sprite index or missing sprite: {number}");
+            return;
+        }
+
         GameObject symbolObject = GameObject.CreatePrimitive(PrimitiveType.Quad);
         symbolObject.name = $"Symbol_{number}";
 
-        // Remove collider as we don't need it
         Destroy(symbolObject.GetComponent<Collider>());
 
-        // Set up the renderer
+        // Create a new instance of the material for this symbol
         Renderer symbolRenderer = symbolObject.GetComponent<Renderer>();
-        Material symbolMaterial = new Material(Shader.Find("Unlit/Transparent"));
+        Material instanceMaterial = new Material(symbolMaterialTemplate);
+        instanceMaterial.mainTexture = ConvertSpriteToTexture(numberSymbols[number]);
+        symbolRenderer.material = instanceMaterial;
 
-        // Correct sprite indexing
-        int spriteIndex = number; // Directly use the number as index
-        symbolMaterial.mainTexture = ConvertSpriteToTexture(numberSymbols[spriteIndex]);
-        symbolRenderer.material = symbolMaterial;
-
-        // Position the symbol on the terminal screen
         Vector3 localPosition = CalculateSymbolPosition(currentSymbols.Count);
         symbolObject.transform.SetParent(terminalScreenRenderer.transform, false);
         symbolObject.transform.localPosition = localPosition;
-
-        // Scale down to 0.01 and rotate 90 degrees on X axis
         symbolObject.transform.localScale = new Vector3(symbolSize.x, symbolSize.y, 1f);
         symbolObject.transform.localRotation = Quaternion.Euler(90, 0, 0);
 
         currentSymbols.Add(symbolObject);
     }
 
+    public List<GameObject> GetCurrentSymbols()
+    {
+        return new List<GameObject>(currentSymbols);
+    }
+
     private Vector3 CalculateSymbolPosition(int symbolIndex)
     {
-        // Calculate local position based on screen space
         float xPos = startPosition.x + (symbolIndex * (symbolSize.x + spacingX));
-        return new Vector3(xPos, startPosition.y, 0.01f); // Slight offset to prevent z-fighting
+        return new Vector3(xPos, startPosition.y, 0.001f); // Slightly adjusted z-offset
     }
 
     public void ClearSymbols()
     {
-        // Remove all existing symbols
-        foreach (var symbol in currentSymbols)
-        {
-            Destroy(symbol);
-        }
-        currentSymbols.Clear();
-    }
-
-    // Utility method to convert Sprite to Texture2D
-    private Texture2D ConvertSpriteToTexture(Sprite sprite)
-    {
-        // Create a new texture from the sprite
-        Texture2D texture = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
-        Color[] pixels = sprite.texture.GetPixels(
-            (int)sprite.rect.x,
-            (int)sprite.rect.y,
-            (int)sprite.rect.width,
-            (int)sprite.rect.height
-        );
-        texture.SetPixels(pixels);
-        texture.Apply();
-        return texture;
-    }
-
-    private void OnDestroy()
-    {
-        // Clean up dynamically created materials
         foreach (var symbol in currentSymbols)
         {
             if (symbol != null)
@@ -131,7 +136,53 @@ public class TerminalInputDisplay : MonoBehaviour
                 {
                     Destroy(renderer.material);
                 }
+                Destroy(symbol);
             }
+        }
+        currentSymbols.Clear();
+    }
+
+    private Texture2D ConvertSpriteToTexture(Sprite sprite)
+    {
+        if (sprite.texture == null)
+        {
+            Debug.LogError($"Sprite texture is null for sprite: {sprite.name}");
+            return null;
+        }
+
+        Texture2D texture = new Texture2D(
+            (int)sprite.rect.width,
+            (int)sprite.rect.height,
+            TextureFormat.RGBA32,
+            false
+        );
+
+        try
+        {
+            Color[] pixels = sprite.texture.GetPixels(
+                (int)sprite.rect.x,
+                (int)sprite.rect.y,
+                (int)sprite.rect.width,
+                (int)sprite.rect.height
+            );
+            texture.SetPixels(pixels);
+            texture.Apply();
+            return texture;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error converting sprite to texture: {e.Message}");
+            Destroy(texture);
+            return null;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        ClearSymbols();
+        if (symbolMaterialTemplate != null)
+        {
+            Destroy(symbolMaterialTemplate);
         }
     }
 }
