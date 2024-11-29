@@ -1,6 +1,8 @@
 using UnityEngine;
 using Cinemachine;
 using System.Collections;
+using UnityEngine.UI;
+using TMPro;
 
 public class RedButton : MonoBehaviour
 {
@@ -11,29 +13,30 @@ public class RedButton : MonoBehaviour
     [SerializeField] private string buttonAnimationBool = "Switch"; // Animation bool name
     [SerializeField] private DoorController[] doors; // Array of door controllers to activate
     [SerializeField] private CinemachineFreeLook freeLookCamera; // Reference to the Cinemachine FreeLook camera
+    private GameClockManager gameClockManager;
 
     private bool isPlayerNear = false; // Tracks if the player is within range
     private bool isButtonActive = true; // Tracks if the button can be interacted with
 
-    private float originalNoiseAmplitude;
-    private float originalNoiseFrequency;
+    [Header("Game Completion")]
+    [SerializeField] private CinemachineVirtualCamera completionCamera;
+    [SerializeField] private GameObject gameUIPanel;
+    [SerializeField] private GameObject gameCompletePanel;
+    [SerializeField] private TextMeshProUGUI completionTimeText;
+    [SerializeField] private Image fadeImage;
+    [SerializeField] private float fadeDuration = 1f;
+    [SerializeField] private float skyboxRotationSpeed = 1f;
+    private Material skyboxMaterial;
 
     void Start()
     {
+        gameClockManager = FindObjectOfType<GameClockManager>();
+        skyboxMaterial = RenderSettings.skybox;
+        if (gameCompletePanel != null) gameCompletePanel.SetActive(false);
+
         if (uiPrompt != null)
         {
             uiPrompt.SetActive(false); // Ensure UI prompt starts hidden
-        }
-
-        if (freeLookCamera != null)
-        {
-            // Store the original noise values for restoration
-            CinemachineBasicMultiChannelPerlin topRigNoise = freeLookCamera.GetRig(0).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-            if (topRigNoise != null)
-            {
-                originalNoiseAmplitude = topRigNoise.m_AmplitudeGain;
-                originalNoiseFrequency = topRigNoise.m_FrequencyGain;
-            }
         }
     }
 
@@ -94,11 +97,9 @@ public class RedButton : MonoBehaviour
             }
         }
 
-        // Add explosion camera shake
-        if (freeLookCamera != null)
-        {
-            StartCoroutine(ShakeCamera(3f, 3f, 3f));
-        }
+        if (gameClockManager != null) gameClockManager.PauseTimer();
+
+        GameCompletionSequence();
 
         // Hide the UI prompt and deactivate the button
         if (uiPrompt != null)
@@ -110,39 +111,47 @@ public class RedButton : MonoBehaviour
         Debug.Log("Red button pressed! Doors activated.");
     }
 
-    private IEnumerator ShakeCamera(float amplitude, float frequency, float duration)
-    {
-        if (freeLookCamera == null) yield break;
-
-        // Apply noise to all rigs
-        for (int i = 0; i < 3; i++)
-        {
-            CinemachineBasicMultiChannelPerlin rigNoise = freeLookCamera.GetRig(i).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-            if (rigNoise != null)
-            {
-                rigNoise.m_AmplitudeGain = amplitude;
-                rigNoise.m_FrequencyGain = frequency;
-            }
-        }
-
-        yield return new WaitForSeconds(duration);
-
-        // Reset noise to original values
-        for (int i = 0; i < 3; i++)
-        {
-            CinemachineBasicMultiChannelPerlin rigNoise = freeLookCamera.GetRig(i).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-            if (rigNoise != null)
-            {
-                rigNoise.m_AmplitudeGain = originalNoiseAmplitude;
-                rigNoise.m_FrequencyGain = originalNoiseFrequency;
-            }
-        }
-    }
-
     private void OnDrawGizmosSelected()
     {
         // Draw the detection radius in the Scene view for debugging
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    }
+
+    private void GameCompletionSequence()
+    {
+        freeLookCamera.Priority = 0;
+        completionCamera.Priority = 11;
+
+        // Update UI
+        gameUIPanel.SetActive(false);
+        gameCompletePanel.SetActive(true);
+
+        // Set completion time
+        float remainingTime = gameClockManager.GetRemainingTime();
+        int minutes = Mathf.FloorToInt(remainingTime / 60f);
+        int seconds = Mathf.FloorToInt(remainingTime % 60f);
+        completionTimeText.text = $"Time: {minutes:00}:{seconds:00}";
+
+        // Start skybox rotation
+        StartCoroutine(RotateSkybox());
+    }
+
+    private IEnumerator RotateSkybox()
+    {
+        // Set initial rotation
+        skyboxMaterial.SetFloat("_Rotation", 252f);
+
+        // Small delay before starting rotation
+        yield return new WaitForSeconds(0.5f);
+
+        float currentRotation = 252f;
+
+        while (true)
+        {
+            currentRotation += skyboxRotationSpeed * Time.deltaTime;
+            skyboxMaterial.SetFloat("_Rotation", currentRotation);
+            yield return null;
+        }
     }
 }

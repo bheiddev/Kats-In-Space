@@ -1,37 +1,62 @@
+// GameClockManager.cs - Attach to an empty GameObject in your first scene
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameClockManager : MonoBehaviour
 {
-    public static GameClockManager Instance; // Singleton instance
+    public static GameClockManager Instance { get; private set; }
 
-    private float elapsedTime = 0f; // Tracks total elapsed time
-    private bool isRunning = false; // Tracks if the clock is running
+    private float remainingTime;
+    private bool isRunning;
+    private const float STARTING_TIME = 1800f; // 30 minutes in seconds
+    [SerializeField] private GameObject gameOverPanel;
 
-    void Awake()
+    private void Awake()
     {
-        // Ensure only one instance exists
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
-        else
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        // Initialize timer
+        remainingTime = STARTING_TIME;
+
+        // Subscribe to scene loading events
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Check if we're in a level scene or loading screen
+        if (scene.name.Contains("SpaceshipLevel"))
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // Persist through scenes
+            ResumeTimer();
+        }
+        else if (scene.name.Contains("LoadingScreen"))
+        {
+            PauseTimer();
         }
     }
 
-    void Update()
+    private void Update()
     {
-        if (isRunning)
+        if (isRunning && remainingTime > 0)
         {
-            elapsedTime += Time.deltaTime; // Increment timer when running
+            remainingTime -= Time.deltaTime;
+            if (remainingTime <= 0)
+            {
+                remainingTime = 0;
+                OnTimeExpired();
+            }
         }
-    }
-
-    public void StartTimer()
-    {
-        isRunning = true;
     }
 
     public void PauseTimer()
@@ -39,14 +64,19 @@ public class GameClockManager : MonoBehaviour
         isRunning = false;
     }
 
-    public void StopTimer()
+    public void ResumeTimer()
     {
-        isRunning = false;
-        Debug.Log($"Final Game Time: {elapsedTime:F2} seconds");
+        isRunning = true;
     }
 
-    public float GetElapsedTime()
+    public float GetRemainingTime()
     {
-        return elapsedTime;
+        return remainingTime;
+    }
+
+    private void OnTimeExpired()
+    {
+        Time.timeScale = 0; // Pause game
+        gameOverPanel.SetActive(true);
     }
 }
