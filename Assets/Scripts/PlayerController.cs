@@ -86,7 +86,10 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer()
     {
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        // Calculate the move direction
+        moveDirection = (orientation.forward * verticalInput + orientation.right * horizontalInput).normalized;
+
+        // Apply force to the rigidbody
         rb.AddForce(moveDirection * moveSpeed * 10f, ForceMode.Force);
     }
 
