@@ -8,6 +8,7 @@ public class CodexPanel : MonoBehaviour
 
     [Header("Audio Settings")]
     [SerializeField] private AudioClip toggleAudioClip; // Audio clip to play when the codex is toggled
+    [Range(0f, 1f)] [SerializeField] private float audioVolume = 1f; // Volume of the audio clip
     private AudioSource audioSource;
 
     private void Start()
@@ -35,7 +36,7 @@ public class CodexPanel : MonoBehaviour
             // Play the audio clip when the codex is toggled
             if (toggleAudioClip != null && audioSource != null)
             {
-                audioSource.PlayOneShot(toggleAudioClip);
+                audioSource.PlayOneShot(toggleAudioClip, audioVolume); // Use the volume parameter
             }
             else
             {

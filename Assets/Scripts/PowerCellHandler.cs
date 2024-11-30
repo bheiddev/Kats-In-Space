@@ -32,6 +32,7 @@ public class PowerCellHandler : MonoBehaviour
 
     [Header("Audio Settings")]
     [SerializeField] private AudioClip powerCellAudioClip; // Audio clip for power cell actions
+    [SerializeField] [Range(0f, 1f)] private float volume = 1.0f; // Volume for audio playback (0.0 to 1.0)
     private AudioSource audioSource;
 
     void Start()
@@ -42,6 +43,7 @@ public class PowerCellHandler : MonoBehaviour
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
+        audioSource.volume = Mathf.Clamp(volume, 0f, 1f); // Set initial volume
     }
 
     void Update()
@@ -233,7 +235,7 @@ public class PowerCellHandler : MonoBehaviour
     {
         if (powerCellAudioClip != null && audioSource != null)
         {
-            audioSource.PlayOneShot(powerCellAudioClip);
+            audioSource.PlayOneShot(powerCellAudioClip, volume); // Use volume parameter
         }
     }
 
