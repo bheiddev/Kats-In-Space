@@ -4266,8 +4266,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstepAudioClip: {fileID: 8300000, guid: fca4f5e00c5da114f81a7dc48db2f434, type: 3}
   footstepInterval: 0.85
-  maxFootstepDistance: 20
-  footstepVolume: 0.6
+  maxFootstepDistance: 8
+  footstepVolume: 0.45
 --- !u!1 &191797268
 GameObject:
   m_ObjectHideFlags: 0
@@ -17954,8 +17954,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstepAudioClip: {fileID: 8300000, guid: fca4f5e00c5da114f81a7dc48db2f434, type: 3}
   footstepInterval: 0.85
-  maxFootstepDistance: 20
-  footstepVolume: 0.6
+  maxFootstepDistance: 8
+  footstepVolume: 0.45
 --- !u!1001 &830429674
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31407,8 +31407,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstepAudioClip: {fileID: 8300000, guid: fca4f5e00c5da114f81a7dc48db2f434, type: 3}
   footstepInterval: 0.85
-  maxFootstepDistance: 20
-  footstepVolume: 0.6
+  maxFootstepDistance: 8
+  footstepVolume: 0.45
 --- !u!1001 &1540066658
 PrefabInstance:
   m_ObjectHideFlags: 0
