@@ -23,6 +23,11 @@ public class TerminalInputDisplay : MonoBehaviour
 
     private List<GameObject> currentSymbols = new List<GameObject>();
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip buttonClickClip;
+
+    private AudioSource audioSource;
+
     private void Awake()
     {
         if (terminalScreenRenderer == null)
@@ -31,7 +36,8 @@ public class TerminalInputDisplay : MonoBehaviour
             return;
         }
 
-        // Create and cache the template material at startup
+        // Setup audio source
+        InitializeAudioSource();
         InitializeSymbolMaterial();
         SetupButtonListeners();
     }
@@ -56,6 +62,16 @@ public class TerminalInputDisplay : MonoBehaviour
         symbolMaterialTemplate.name = "SymbolMaterialTemplate";
     }
 
+    private void InitializeAudioSource()
+    {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+        audioSource.playOnAwake = false; // Prevent auto-playing
+    }
+
     private void SetupButtonListeners()
     {
         // Validate number symbols array
@@ -74,12 +90,20 @@ public class TerminalInputDisplay : MonoBehaviour
             }
 
             int buttonNumber = i;
-            inputButtons[i].onClick.AddListener(() => AddSymbol(buttonNumber));
+            inputButtons[i].onClick.AddListener(() =>
+            {
+                AddSymbol(buttonNumber);
+                PlayButtonClickSound();
+            });
         }
 
         if (clearButton != null)
         {
-            clearButton.onClick.AddListener(ClearSymbols);
+            clearButton.onClick.AddListener(() =>
+            {
+                ClearSymbols();
+                PlayButtonClickSound();
+            });
         }
     }
 
@@ -140,6 +164,14 @@ public class TerminalInputDisplay : MonoBehaviour
             }
         }
         currentSymbols.Clear();
+    }
+
+    private void PlayButtonClickSound()
+    {
+        if (buttonClickClip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(buttonClickClip);
+        }
     }
 
     private Texture2D ConvertSpriteToTexture(Sprite sprite)

@@ -19,6 +19,11 @@ public class TerminalHandler : MonoBehaviour
     [SerializeField] private float interactionRadius = 2f;
     [SerializeField] private LayerMask terminalLayer;
 
+    [Header("Audio Settings")]
+    public AudioClip terminalInteractionClip;
+
+    private AudioSource audioSource;
+
     // State tracking
     private bool isUsingTerminal;
     private GameObject currentTerminal;
@@ -35,6 +40,12 @@ public class TerminalHandler : MonoBehaviour
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
         if (firstPersonCamera != null)
         {
             firstPersonCamera.gameObject.SetActive(false);
@@ -94,6 +105,9 @@ public class TerminalHandler : MonoBehaviour
     {
         isUsingTerminal = true;
 
+        // Play interaction sound
+        PlayAudioClip();
+
         // Switch cameras
         thirdPersonCamera.gameObject.SetActive(false);
         firstPersonCamera.gameObject.SetActive(true);
@@ -121,6 +135,9 @@ public class TerminalHandler : MonoBehaviour
     {
         isUsingTerminal = false;
 
+        // Play interaction sound
+        PlayAudioClip();
+
         // Hide the original UI and restore cursor state
         uiPanel.SetActive(false);
         Cursor.visible = wasMouseVisible;
@@ -137,6 +154,14 @@ public class TerminalHandler : MonoBehaviour
         if (isCollidingWithTerminal)
         {
             collisionUIPanel.SetActive(true);
+        }
+    }
+
+    private void PlayAudioClip()
+    {
+        if (terminalInteractionClip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(terminalInteractionClip);
         }
     }
 

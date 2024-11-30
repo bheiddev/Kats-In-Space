@@ -14,6 +14,10 @@ public class CatHandler : MonoBehaviour
     [Header("VFX Settings")]
     [SerializeField] private GameObject smokeVFXPrefab; // Reference to the smoke particle prefab
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip interactAudioClip; // Audio clip for cat interaction
+    private AudioSource audioSource; // Reference to the audio source
+
     public bool IsCatCollected { get; private set; } = false; // Flag to check if the cat has been collected
 
     private bool isNearCat = false; // Tracks if the player is near a cat
@@ -33,6 +37,17 @@ public class CatHandler : MonoBehaviour
         {
             catUIPanel.SetActive(false); // Hide interaction panel at start
         }
+
+        // Get or add the AudioSource component
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        // Configure the AudioSource
+        audioSource.playOnAwake = false; // Don't play on start
+        audioSource.spatialBlend = 1.0f; // Fully spatial for 3D sound
     }
 
     void Update()
@@ -86,6 +101,13 @@ public class CatHandler : MonoBehaviour
         {
             if (hit.CompareTag("Cat"))
             {
+                // Play interaction audio
+                if (interactAudioClip != null && audioSource != null)
+                {
+                    audioSource.clip = interactAudioClip;
+                    audioSource.Play();
+                }
+
                 // Instantiate the smoke VFX at the cat's position
                 if (smokeVFXPrefab != null)
                 {

@@ -30,6 +30,20 @@ public class PowerCellHandler : MonoBehaviour
     [SerializeField] private GameObject greyYellowPowerCellUI;
     [SerializeField] private GameObject greyRedPowerCellUI;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip powerCellAudioClip; // Audio clip for power cell actions
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        // Ensure an AudioSource is attached to the player object for sound playback
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
     void Update()
     {
         CheckForProximityToPowerCellsAndContainers();
@@ -109,6 +123,9 @@ public class PowerCellHandler : MonoBehaviour
                 // Update UI
                 TogglePowerCellUI(PowerCellType.Green, true);
 
+                // Play audio when the power cell is picked up
+                PlayPowerCellAudio();
+
                 Debug.Log("Picked up Green Power Cell!");
                 return;
             }
@@ -121,6 +138,9 @@ public class PowerCellHandler : MonoBehaviour
                 // Update UI
                 TogglePowerCellUI(PowerCellType.Yellow, true);
 
+                // Play audio when the power cell is picked up
+                PlayPowerCellAudio();
+
                 Debug.Log("Picked up Yellow Power Cell!");
                 return;
             }
@@ -132,6 +152,9 @@ public class PowerCellHandler : MonoBehaviour
 
                 // Update UI
                 TogglePowerCellUI(PowerCellType.Red, true);
+
+                // Play audio when the power cell is picked up
+                PlayPowerCellAudio();
 
                 Debug.Log("Picked up Red Power Cell!");
                 return;
@@ -152,6 +175,9 @@ public class PowerCellHandler : MonoBehaviour
                                 // Update UI
                                 TogglePowerCellUI(PowerCellType.Green, false);
 
+                                // Play audio when the power cell is placed
+                                PlayPowerCellAudio();
+
                                 Debug.Log("Powered Green Power Cell Container!");
                             }
                             break;
@@ -164,6 +190,9 @@ public class PowerCellHandler : MonoBehaviour
                                 // Update UI
                                 TogglePowerCellUI(PowerCellType.Yellow, false);
 
+                                // Play audio when the power cell is placed
+                                PlayPowerCellAudio();
+
                                 Debug.Log("Powered Yellow Power Cell Container!");
                             }
                             break;
@@ -175,6 +204,9 @@ public class PowerCellHandler : MonoBehaviour
 
                                 // Update UI
                                 TogglePowerCellUI(PowerCellType.Red, false);
+
+                                // Play audio when the power cell is placed
+                                PlayPowerCellAudio();
 
                                 Debug.Log("Powered Red Power Cell Container!");
                             }
@@ -193,6 +225,15 @@ public class PowerCellHandler : MonoBehaviour
             // Add a 2f offset on the Y axis
             Vector3 offsetPosition = position + new Vector3(0, .40f, 0);
             Instantiate(particlePrefab, offsetPosition, Quaternion.identity);
+        }
+    }
+
+    // Method to play the power cell audio
+    private void PlayPowerCellAudio()
+    {
+        if (powerCellAudioClip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(powerCellAudioClip);
         }
     }
 

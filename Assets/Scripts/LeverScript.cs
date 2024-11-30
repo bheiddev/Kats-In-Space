@@ -4,31 +4,39 @@ using System.Collections.Generic;
 
 public class LeverScript : MonoBehaviour
 {
+    [Header("Lever Settings")]
     public Animator leverAnimator;
     public float activationDistance = 2f;
     public string playerTag = "Player";
     public string switchBoolName = "switch";
-    public GameObject door;  // Door GameObject with the DoorController script
-    public List<PowerCellContainer> requiredContainers;  // List of required power cell containers
+    public GameObject door;
+    public List<PowerCellContainer> requiredContainers;
 
+    [Header("Final Lever Settings")]
     public CombinationManager combinationManager;
     public TerminalInputDisplay terminalInputDisplay;
     public GameObject finalLeverObject;
+
+    [Header("Error UI Panels")]
+    [SerializeField] private GameObject incorrectCombinationUIPanel;
+    [SerializeField] private GameObject notAllContainersPoweredUIPanel;
+    [SerializeField] private GameObject catNotCollectedUIPanel;
+
+    [Header("Cat Collection")]
+    public CatHandler catHandler;
+
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip errorAudioClip;    // Error audio
+    private AudioSource audioSource;
 
     private GameObject player;
     private DoorController doorController;
     public bool isActivated = false;
     private bool isFinalLever = false;
 
-    [SerializeField] private GameObject incorrectCombinationUIPanel;
-    [SerializeField] private GameObject notAllContainersPoweredUIPanel;
-    [SerializeField] private GameObject catNotCollectedUIPanel;
-
-    [Header("Cat Collection")]
-    public CatHandler catHandler; // Reference to the CatHandler script
-
     private void Start()
     {
+        // Determine if this is the final lever
         isFinalLever = (finalLeverObject != null && finalLeverObject == this.gameObject);
 
         player = GameObject.FindGameObjectWithTag(playerTag);
@@ -39,6 +47,13 @@ public class LeverScript : MonoBehaviour
             {
                 doorController.enabled = false;
             }
+        }
+
+        // Setup AudioSource
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
         }
     }
 
@@ -96,6 +111,12 @@ public class LeverScript : MonoBehaviour
 
     private IEnumerator ShowErrorUI(GameObject errorUIPanel)
     {
+        // Play error sound
+        if (errorAudioClip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(errorAudioClip);
+        }
+
         errorUIPanel.SetActive(true);
         yield return new WaitForSeconds(2f);
         errorUIPanel.SetActive(false);
@@ -190,10 +211,12 @@ public class LeverScript : MonoBehaviour
     {
         isActivated = true;
         leverAnimator.SetBool(switchBoolName, true);
+
         if (doorController != null)
         {
             doorController.enabled = true;
         }
+
         Debug.Log("Lever activated and door opened!");
     }
 }

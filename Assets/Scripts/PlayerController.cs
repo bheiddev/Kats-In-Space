@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask jumpBoxLayer;
     public GameObject characterMesh; // Reference to the player's mesh
     public GameObject jumpBoxUIPanel; // Reference to the UI panel for jump boxes
+    private AudioSource audioSource;         // Reference to the audio source
+    public AudioClip jumpAudioClip;          // Audio clip to play when jumping
 
     [Header("Movement Values")]
     float horizontalInput;
@@ -35,6 +37,18 @@ public class PlayerController : MonoBehaviour
         {
             jumpBoxUIPanel.SetActive(false); // Ensure the UI panel is hidden at start
         }
+
+        // Get or add the AudioSource component
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        // Configure the AudioSource settings
+        audioSource.playOnAwake = false; // Prevent the clip from playing on start
+        audioSource.spatialBlend = 1.0f; // Fully spatial sound (3D)
+        audioSource.loop = false;       // Do not loop the jump sound
     }
 
     private void MyInput()
@@ -102,6 +116,13 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(rayOrigin, characterMesh.transform.forward, out hit, rayDistance, jumpBoxLayer))
         {
+            // Play the jump sound
+            if (jumpAudioClip != null && audioSource != null)
+            {
+                audioSource.clip = jumpAudioClip;
+                audioSource.Play();
+            }
+
             // Start moving to the detected box
             StartCoroutine(MoveToBox(hit.transform));
         }
