@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 5347660124876259505}
   - component: {fileID: 655374240166010665}
   - component: {fileID: 6689229625529131396}
+  - component: {fileID: 1916433672756314980}
   m_Layer: 0
   m_Name: Ben10Alien
   m_TagString: Untagged
@@ -198,7 +199,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1025
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -208,6 +209,18 @@ CapsuleCollider:
   m_Height: 92.84305
   m_Direction: 1
   m_Center: {x: -3.0302894, y: 25.600014, z: 0}
+--- !u!114 &1916433672756314980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151942929645450282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce421bfdae0b7234c9f26fc8a6a81c59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &258021557579580638
 GameObject:
   m_ObjectHideFlags: 0
@@ -1377,6 +1390,7 @@ GameObject:
   - component: {fileID: 1388988784414137906}
   - component: {fileID: 552437487119974685}
   - component: {fileID: 1551961292328463263}
+  - component: {fileID: 532912917796443463}
   m_Layer: 0
   m_Name: EnemyAlien
   m_TagString: Untagged
@@ -1473,9 +1487,25 @@ MonoBehaviour:
   copyAlphaFromOriginal: 1
   cones: []
   originalColors: []
-  alertAudioClip: {fileID: 0}
+  alertAudioClip: {fileID: 8300000, guid: 113d2ff204a994ef8848ff0d54548bc9, type: 3}
   loopAudio: 1
-  audioVolume: 1
+  audioVolume: 0.25
+--- !u!114 &532912917796443463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3421055797407862372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a651827d3e78d1844b9d155e227921d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepAudioClip: {fileID: 8300000, guid: fca4f5e00c5da114f81a7dc48db2f434, type: 3}
+  footstepInterval: 0.85
+  maxFootstepDistance: 24
+  footstepVolume: 0.45
 --- !u!1 &3641471607092576672
 GameObject:
   m_ObjectHideFlags: 0

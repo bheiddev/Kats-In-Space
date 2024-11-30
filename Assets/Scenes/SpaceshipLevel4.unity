@@ -712,16 +712,6 @@ PrefabInstance:
       propertyPath: waypoints.Array.data[5]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1551961292328463263, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: audioVolume
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1551961292328463263, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: alertAudioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 113d2ff204a994ef8848ff0d54548bc9, type: 3}
     - target: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
         type: 3}
       propertyPath: m_Name
@@ -737,16 +727,6 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 21.087069
       objectReference: {fileID: 0}
-    - target: {fileID: 6689229625529131396, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6689229625529131396, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7047406240646959572, guid: 62c441e928885a3419d194371a4dc4f5,
         type: 3}
       propertyPath: collidesWith.m_Bits
@@ -755,56 +735,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 20281900}
-    - targetCorrespondingSourceObject: {fileID: 151942929645450282, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 20281898}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62c441e928885a3419d194371a4dc4f5, type: 3}
---- !u!1 &20281897 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 151942929645450282, guid: 62c441e928885a3419d194371a4dc4f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 20281896}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &20281898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 20281897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce421bfdae0b7234c9f26fc8a6a81c59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &20281899 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 20281896}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &20281900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 20281899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a651827d3e78d1844b9d155e227921d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  footstepAudioClip: {fileID: 8300000, guid: fca4f5e00c5da114f81a7dc48db2f434, type: 3}
-  footstepInterval: 0.85
-  maxFootstepDistance: 8
-  footstepVolume: 0.45
 --- !u!1001 &24713638
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6298,16 +6230,6 @@ PrefabInstance:
       propertyPath: waypoints.Array.data[5]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1551961292328463263, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: audioVolume
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1551961292328463263, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: alertAudioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 113d2ff204a994ef8848ff0d54548bc9, type: 3}
     - target: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
         type: 3}
       propertyPath: m_Name
@@ -6323,16 +6245,6 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 21.087069
       objectReference: {fileID: 0}
-    - target: {fileID: 6689229625529131396, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6689229625529131396, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7047406240646959572, guid: 62c441e928885a3419d194371a4dc4f5,
         type: 3}
       propertyPath: collidesWith.m_Bits
@@ -6341,56 +6253,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 249637538}
-    - targetCorrespondingSourceObject: {fileID: 151942929645450282, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 249637536}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62c441e928885a3419d194371a4dc4f5, type: 3}
---- !u!1 &249637535 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 151942929645450282, guid: 62c441e928885a3419d194371a4dc4f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 249637534}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &249637536
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 249637535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce421bfdae0b7234c9f26fc8a6a81c59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &249637537 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 249637534}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &249637538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 249637537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a651827d3e78d1844b9d155e227921d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  footstepAudioClip: {fileID: 8300000, guid: fca4f5e00c5da114f81a7dc48db2f434, type: 3}
-  footstepInterval: 0.85
-  maxFootstepDistance: 8
-  footstepVolume: 0.45
 --- !u!1001 &250738482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17141,16 +17005,6 @@ PrefabInstance:
       propertyPath: waypoints.Array.data[5]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1551961292328463263, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: audioVolume
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1551961292328463263, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: alertAudioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 113d2ff204a994ef8848ff0d54548bc9, type: 3}
     - target: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
         type: 3}
       propertyPath: m_Name
@@ -17166,16 +17020,6 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 21.087069
       objectReference: {fileID: 0}
-    - target: {fileID: 6689229625529131396, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6689229625529131396, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7047406240646959572, guid: 62c441e928885a3419d194371a4dc4f5,
         type: 3}
       propertyPath: collidesWith.m_Bits
@@ -17184,56 +17028,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 684481703}
-    - targetCorrespondingSourceObject: {fileID: 151942929645450282, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 684481701}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62c441e928885a3419d194371a4dc4f5, type: 3}
---- !u!1 &684481700 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 151942929645450282, guid: 62c441e928885a3419d194371a4dc4f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 684481699}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &684481701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 684481700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce421bfdae0b7234c9f26fc8a6a81c59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &684481702 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 684481699}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &684481703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 684481702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a651827d3e78d1844b9d155e227921d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  footstepAudioClip: {fileID: 8300000, guid: fca4f5e00c5da114f81a7dc48db2f434, type: 3}
-  footstepInterval: 0.85
-  maxFootstepDistance: 8
-  footstepVolume: 0.45
 --- !u!1001 &684601968
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20045,16 +19841,6 @@ PrefabInstance:
       propertyPath: waypoints.Array.data[5]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1551961292328463263, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: audioVolume
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1551961292328463263, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: alertAudioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 113d2ff204a994ef8848ff0d54548bc9, type: 3}
     - target: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
         type: 3}
       propertyPath: m_Name
@@ -20070,16 +19856,6 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 21.087069
       objectReference: {fileID: 0}
-    - target: {fileID: 6689229625529131396, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6689229625529131396, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7047406240646959572, guid: 62c441e928885a3419d194371a4dc4f5,
         type: 3}
       propertyPath: collidesWith.m_Bits
@@ -20088,56 +19864,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 781971002}
-    - targetCorrespondingSourceObject: {fileID: 151942929645450282, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 781971000}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62c441e928885a3419d194371a4dc4f5, type: 3}
---- !u!1 &781970999 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 151942929645450282, guid: 62c441e928885a3419d194371a4dc4f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 781970998}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &781971000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 781970999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce421bfdae0b7234c9f26fc8a6a81c59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &781971001 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 781970998}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &781971002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 781971001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a651827d3e78d1844b9d155e227921d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  footstepAudioClip: {fileID: 8300000, guid: fca4f5e00c5da114f81a7dc48db2f434, type: 3}
-  footstepInterval: 0.85
-  maxFootstepDistance: 8
-  footstepVolume: 0.45
 --- !u!1001 &782274163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27135,16 +26863,6 @@ PrefabInstance:
       propertyPath: waypoints.Array.data[5]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1551961292328463263, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: audioVolume
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1551961292328463263, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: alertAudioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 113d2ff204a994ef8848ff0d54548bc9, type: 3}
     - target: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
         type: 3}
       propertyPath: m_Name
@@ -27160,16 +26878,6 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 21.087069
       objectReference: {fileID: 0}
-    - target: {fileID: 6689229625529131396, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6689229625529131396, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7047406240646959572, guid: 62c441e928885a3419d194371a4dc4f5,
         type: 3}
       propertyPath: collidesWith.m_Bits
@@ -27178,56 +26886,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1031114317}
-    - targetCorrespondingSourceObject: {fileID: 151942929645450282, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1031114315}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62c441e928885a3419d194371a4dc4f5, type: 3}
---- !u!1 &1031114314 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 151942929645450282, guid: 62c441e928885a3419d194371a4dc4f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1031114313}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1031114315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1031114314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce421bfdae0b7234c9f26fc8a6a81c59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &1031114316 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1031114313}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1031114317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1031114316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a651827d3e78d1844b9d155e227921d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  footstepAudioClip: {fileID: 8300000, guid: fca4f5e00c5da114f81a7dc48db2f434, type: 3}
-  footstepInterval: 0.85
-  maxFootstepDistance: 8
-  footstepVolume: 0.45
 --- !u!1001 &1033994600
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42597,16 +42257,6 @@ PrefabInstance:
       propertyPath: waypoints.Array.data[6]
       value: 
       objectReference: {fileID: 496307805}
-    - target: {fileID: 1551961292328463263, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: audioVolume
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1551961292328463263, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: alertAudioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 113d2ff204a994ef8848ff0d54548bc9, type: 3}
     - target: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
         type: 3}
       propertyPath: m_Name
@@ -42622,16 +42272,6 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 21.087069
       objectReference: {fileID: 0}
-    - target: {fileID: 6689229625529131396, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6689229625529131396, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7047406240646959572, guid: 62c441e928885a3419d194371a4dc4f5,
         type: 3}
       propertyPath: collidesWith.m_Bits
@@ -42640,56 +42280,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1715177962}
-    - targetCorrespondingSourceObject: {fileID: 151942929645450282, guid: 62c441e928885a3419d194371a4dc4f5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1715177960}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62c441e928885a3419d194371a4dc4f5, type: 3}
---- !u!1 &1715177959 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 151942929645450282, guid: 62c441e928885a3419d194371a4dc4f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1715177958}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1715177960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1715177959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce421bfdae0b7234c9f26fc8a6a81c59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &1715177961 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3421055797407862372, guid: 62c441e928885a3419d194371a4dc4f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1715177958}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1715177962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1715177961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a651827d3e78d1844b9d155e227921d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  footstepAudioClip: {fileID: 8300000, guid: fca4f5e00c5da114f81a7dc48db2f434, type: 3}
-  footstepInterval: 0.85
-  maxFootstepDistance: 8
-  footstepVolume: 0.45
 --- !u!1 &1716299531
 GameObject:
   m_ObjectHideFlags: 0
