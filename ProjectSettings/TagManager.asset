@@ -15,6 +15,7 @@ TagManager:
   - Lever
   - Cat
   - Codex
+  - fadeImageTag
   layers:
   - Default
   - TransparentFX

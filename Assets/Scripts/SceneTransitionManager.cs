@@ -5,7 +5,6 @@ using System.Collections;
 
 public class SceneTransitionManager : MonoBehaviour
 {
-    public Image fadeImage;
     public string loadingScreenSceneName = "LoadingScreen";
     public float fadeDuration = 1f;
     public float loadingScreenDuration = 10f;
@@ -40,9 +39,6 @@ public class SceneTransitionManager : MonoBehaviour
     {
         isTransitioning = true;
 
-        // Fade to black
-        yield return StartCoroutine(FadeToBlack());
-
         // Store next scene index
         int nextSceneIndex = originSceneIndex + 1;
 
@@ -66,21 +62,5 @@ public class SceneTransitionManager : MonoBehaviour
         }
 
         isTransitioning = false;
-    }
-
-    private IEnumerator FadeToBlack()
-    {
-        float elapsed = 0f;
-        Color startColor = fadeImage.color;
-        Color endColor = new Color(startColor.r, startColor.g, startColor.b, 1f);
-
-        while (elapsed < fadeDuration)
-        {
-            fadeImage.color = Color.Lerp(startColor, endColor, elapsed / fadeDuration);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        fadeImage.color = endColor;
     }
 }
