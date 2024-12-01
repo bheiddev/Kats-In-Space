@@ -25161,7 +25161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 560719028}
-  detectionRange: 3
+  detectionRange: 4
   nearbyAudioClip: {fileID: 8300000, guid: eea5606f764734840bfcc954217680b1, type: 3}
   audioVolume: 0.5
 --- !u!1 &1342249385
@@ -26829,7 +26829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 560719028}
-  detectionRange: 3
+  detectionRange: 4
   nearbyAudioClip: {fileID: 8300000, guid: eea5606f764734840bfcc954217680b1, type: 3}
   audioVolume: 0.5
 --- !u!1001 &1430976302
@@ -28410,7 +28410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 560719028}
-  detectionRange: 3
+  detectionRange: 4
   nearbyAudioClip: {fileID: 8300000, guid: eea5606f764734840bfcc954217680b1, type: 3}
   audioVolume: 0.5
 --- !u!1 &1507062583
@@ -31969,7 +31969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 560719028}
-  detectionRange: 3
+  detectionRange: 4
   nearbyAudioClip: {fileID: 8300000, guid: eea5606f764734840bfcc954217680b1, type: 3}
   audioVolume: 0.5
 --- !u!4 &1748537054 stripped
@@ -38095,7 +38095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 560719028}
-  detectionRange: 3
+  detectionRange: 4
   nearbyAudioClip: {fileID: 8300000, guid: eea5606f764734840bfcc954217680b1, type: 3}
   audioVolume: 0.5
 --- !u!1 &2128665121
