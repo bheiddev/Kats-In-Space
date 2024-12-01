@@ -6371,7 +6371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 465744, guid: f3a954679d4d04b49953424fc6bf526c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 59.99
+      value: 59.97
       objectReference: {fileID: 0}
     - target: {fileID: 465744, guid: f3a954679d4d04b49953424fc6bf526c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7692,12 +7692,12 @@ PrefabInstance:
     - target: {fileID: 6689229625529131396, guid: 62c441e928885a3419d194371a4dc4f5,
         type: 3}
       propertyPath: m_Height
-      value: 81.87442
+      value: 91.66557
       objectReference: {fileID: 0}
     - target: {fileID: 6689229625529131396, guid: 62c441e928885a3419d194371a4dc4f5,
         type: 3}
       propertyPath: m_Center.y
-      value: 31.084766
+      value: 26.189384
       objectReference: {fileID: 0}
     - target: {fileID: 7047406240646959572, guid: 62c441e928885a3419d194371a4dc4f5,
         type: 3}
@@ -26521,6 +26521,10 @@ PrefabInstance:
       value: decorative_wall_6 (100)
       objectReference: {fileID: 0}
     - target: {fileID: 465744, guid: f3a954679d4d04b49953424fc6bf526c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.05604
+      objectReference: {fileID: 0}
+    - target: {fileID: 465744, guid: f3a954679d4d04b49953424fc6bf526c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 51.8
       objectReference: {fileID: 0}
@@ -29649,7 +29653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4465978567149622, guid: 116bb3e6c8f38c84e9e43fe0b3cc95b8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.187317
+      value: -1.211
       objectReference: {fileID: 0}
     - target: {fileID: 4465978567149622, guid: 116bb3e6c8f38c84e9e43fe0b3cc95b8, type: 3}
       propertyPath: m_LocalPosition.z
