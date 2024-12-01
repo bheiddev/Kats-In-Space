@@ -8,8 +8,6 @@ public class SettingsMenu : MonoBehaviour
 
     [Header("Panels")]
     public GameObject videoSettingsPanel;
-    public GameObject audioSettingsPanel;
-    public GameObject hotkeySettingsPanel;
 
 
     void Start()
@@ -20,21 +18,5 @@ public class SettingsMenu : MonoBehaviour
     public void ShowVideoSettings()
     {
         videoSettingsPanel.SetActive(true);
-        audioSettingsPanel.SetActive(false);
-        hotkeySettingsPanel.SetActive(false);
-    }
-
-    public void ShowAudioSettings()
-    {
-        videoSettingsPanel.SetActive(false);
-        audioSettingsPanel.SetActive(true);
-        hotkeySettingsPanel.SetActive(false);
-    }
-
-    public void ShowHotkeySettings()
-    {
-        videoSettingsPanel.SetActive(false);
-        audioSettingsPanel.SetActive(false);
-        hotkeySettingsPanel.SetActive(true);
     }
 }

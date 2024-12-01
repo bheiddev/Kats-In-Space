@@ -7,16 +7,20 @@ using TMPro;
 public class RedButton : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private float detectionRadius = 1.5f; // Radius within which the player can interact
-    [SerializeField] private GameObject uiPrompt; // UI element to display when in range
-    [SerializeField] private Animator buttonAnimator; // Animator on the button
-    [SerializeField] private string buttonAnimationBool = "Switch"; // Animation bool name
-    [SerializeField] private DoorController[] doors; // Array of door controllers to activate
-    [SerializeField] private CinemachineFreeLook freeLookCamera; // Reference to the Cinemachine FreeLook camera
+    [SerializeField] private float detectionRadius = 1.5f;
+    [SerializeField] private GameObject uiPrompt;
+    [SerializeField] private Animator buttonAnimator;
+    [SerializeField] private string buttonAnimationBool = "Switch";
+    [SerializeField] private DoorController[] doors;
+    [SerializeField] private CinemachineFreeLook freeLookCamera;
     private GameClockManager gameClockManager;
 
-    private bool isPlayerNear = false; // Tracks if the player is within range
-    private bool isButtonActive = true; // Tracks if the button can be interacted with
+    [Header("Audio")]
+    [SerializeField] private AudioSource backgroundMusic; // Reference to background music source
+    [SerializeField] private AudioSource winnerMusic; // Reference to winner music source
+
+    private bool isPlayerNear = false;
+    private bool isButtonActive = true;
 
     [Header("Game Completion")]
     [SerializeField] private CinemachineVirtualCamera completionCamera;
@@ -36,7 +40,7 @@ public class RedButton : MonoBehaviour
 
         if (uiPrompt != null)
         {
-            uiPrompt.SetActive(false); // Ensure UI prompt starts hidden
+            uiPrompt.SetActive(false);
         }
     }
 
@@ -66,7 +70,7 @@ public class RedButton : MonoBehaviour
 
                 if (uiPrompt != null)
                 {
-                    uiPrompt.SetActive(true); // Show UI prompt when player is near
+                    uiPrompt.SetActive(true);
                 }
                 return;
             }
@@ -74,13 +78,27 @@ public class RedButton : MonoBehaviour
 
         if (!isPlayerNear && uiPrompt != null)
         {
-            uiPrompt.SetActive(false); // Hide UI prompt when player is out of range
+            uiPrompt.SetActive(false);
         }
     }
 
     void PressButton()
     {
-        if (!isButtonActive) return; // Prevent pressing an inactive button
+        if (!isButtonActive) return;
+
+        // Unlock cursor
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        // Handle audio
+        if (backgroundMusic != null)
+        {
+            backgroundMusic.Stop();
+        }
+        if (winnerMusic != null)
+        {
+            winnerMusic.Play();
+        }
 
         // Activate the button's animation
         if (buttonAnimator != null)
@@ -93,7 +111,7 @@ public class RedButton : MonoBehaviour
         {
             if (door != null)
             {
-                door.ForceActivateDoor(); // Explicitly activate the door
+                door.ForceActivateDoor();
             }
         }
 
@@ -107,13 +125,12 @@ public class RedButton : MonoBehaviour
             uiPrompt.SetActive(false);
         }
 
-        isButtonActive = false; // Disable the button to prevent reactivation
+        isButtonActive = false;
         Debug.Log("Red button pressed! Doors activated.");
     }
 
     private void OnDrawGizmosSelected()
     {
-        // Draw the detection radius in the Scene view for debugging
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
@@ -139,10 +156,8 @@ public class RedButton : MonoBehaviour
 
     private IEnumerator RotateSkybox()
     {
-        // Set initial rotation
         skyboxMaterial.SetFloat("_Rotation", 252f);
 
-        // Small delay before starting rotation
         yield return new WaitForSeconds(0.5f);
 
         float currentRotation = 252f;

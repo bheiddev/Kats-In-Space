@@ -1452,7 +1452,7 @@ MonoBehaviour:
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
-  speed: 4
+  speed: 3
   angularSpeed: 90
   _mode: 1
   wpNum: 0
@@ -1487,9 +1487,6 @@ MonoBehaviour:
   copyAlphaFromOriginal: 1
   cones: []
   originalColors: []
-  alertAudioClip: {fileID: 8300000, guid: 113d2ff204a994ef8848ff0d54548bc9, type: 3}
-  loopAudio: 1
-  audioVolume: 0.25
 --- !u!114 &532912917796443463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1504,8 +1501,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstepAudioClip: {fileID: 8300000, guid: fca4f5e00c5da114f81a7dc48db2f434, type: 3}
   footstepInterval: 0.85
-  maxFootstepDistance: 24
-  footstepVolume: 0.45
+  maxFootstepDistance: 15
+  footstepVolume: 0.25
 --- !u!1 &3641471607092576672
 GameObject:
   m_ObjectHideFlags: 0
@@ -2119,7 +2116,7 @@ GameObject:
   - component: {fileID: 3338205493300967578}
   m_Layer: 11
   m_Name: LightCone
-  m_TagString: Untagged
+  m_TagString: LightCone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2311,6 +2308,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timesLeftToActivate: -1
+  alertAudioClip: {fileID: 8300000, guid: 113d2ff204a994ef8848ff0d54548bc9, type: 3}
+  loopAudio: 1
+  audioVolume: 0.35
 --- !u!114 &3338205493300967578
 MonoBehaviour:
   m_ObjectHideFlags: 0

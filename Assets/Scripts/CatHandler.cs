@@ -13,6 +13,7 @@ public class CatHandler : MonoBehaviour
 
     [Header("VFX Settings")]
     [SerializeField] private GameObject smokeVFXPrefab; // Reference to the smoke particle prefab
+    private const float VFX_HEIGHT_OFFSET = 0.5f; // Height offset for the smoke VFX
 
     [Header("Audio Settings")]
     [SerializeField] private AudioClip interactAudioClip; // Audio clip for cat interaction
@@ -108,10 +109,13 @@ public class CatHandler : MonoBehaviour
                     audioSource.Play();
                 }
 
-                // Instantiate the smoke VFX at the cat's position
+                // Calculate VFX position with height offset
+                Vector3 vfxPosition = hit.transform.position + Vector3.up * VFX_HEIGHT_OFFSET;
+
+                // Instantiate the smoke VFX at the offset position
                 if (smokeVFXPrefab != null)
                 {
-                    GameObject smokeVFX = Instantiate(smokeVFXPrefab, hit.transform.position, Quaternion.identity);
+                    GameObject smokeVFX = Instantiate(smokeVFXPrefab, vfxPosition, Quaternion.identity);
                     Destroy(smokeVFX, 2f); // Destroy the particle system after 2 seconds
                 }
 

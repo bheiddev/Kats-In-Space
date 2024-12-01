@@ -16,6 +16,8 @@ TagManager:
   - Cat
   - Codex
   - fadeImageTag
+  - LightCone
+  - CeilingLight
   layers:
   - Default
   - TransparentFX
